@@ -6,5 +6,6 @@
 
     <Application.Styles>
         <FluentTheme />
+        <StyleInclude Source="avares://Semi.Avalonia/Themes/Index.axaml"></StyleInclude>
     </Application.Styles>
 </Application>
