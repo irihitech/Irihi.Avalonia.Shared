@@ -1,6 +1,6 @@
 ﻿namespace Irihi.Avalonia.Shared.Contracts;
 
-public interface IClearableControl
+public interface IClearControl
 {
     public void Clear();
 }
