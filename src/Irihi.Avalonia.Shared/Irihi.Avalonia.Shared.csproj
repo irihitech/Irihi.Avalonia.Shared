@@ -7,7 +7,7 @@
         <LangVersion>latest</LangVersion>
         <Version>0.1.0</Version>
         <Authors>IRIHI Technology Co., Ltd.</Authors>
-        <PackageId>Irihi.Ursa</PackageId>
+        <PackageId>Irihi.Avalonia.Shared</PackageId>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 
