@@ -22,4 +22,8 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Irihi.Avalonia.Shared\Irihi.Avalonia.Shared.csproj" />
+    </ItemGroup>
+
 </Project>
