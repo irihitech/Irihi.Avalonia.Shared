@@ -9,24 +9,37 @@ namespace Irihi.Avalonia.Shared.Helpers;
 
 public static class BooleanPropertyMixin
 {
-    public static void Attach<TControl>(AvaloniaProperty<bool> property, string pseudoClass, RoutedEvent? routedEvent = null) 
+    public static void Attach<TControl>(AvaloniaProperty<bool> property, string pseudoClass, RoutedEvent<RoutedEventArgs>? routedEvent = null) 
         where TControl: Control
     {
         property.Changed.Subscribe(new AnonymousObserver<AvaloniaPropertyChangedEventArgs<bool>>((args) =>
         {
-            OnPropertyChanged<TControl>(args, pseudoClass, routedEvent);
+            OnPropertyChanged<TControl, RoutedEventArgs>(args, pseudoClass, routedEvent);
         }));   
     }
 
-    private static void OnPropertyChanged<T>(AvaloniaPropertyChangedEventArgs<bool> args, string pseudoClass, RoutedEvent? routedEvent) where T: Control
+    private static void OnPropertyChanged<TControl, TArgs>(AvaloniaPropertyChangedEventArgs<bool> args, string pseudoClass, RoutedEvent<TArgs>? routedEvent) 
+        where TControl: Control
+        where TArgs: RoutedEventArgs, new()
     {
-        if(args.Sender is T control)
+        if(args.Sender is TControl control)
         {
             PseudolassesExtensions.Set(control.Classes, pseudoClass, args.NewValue.Value);
             if (routedEvent is not null)
             {
-                control.RaiseEvent(new RoutedEventArgs() { RoutedEvent = routedEvent });
+                control.RaiseEvent(new TArgs() { RoutedEvent = routedEvent });
             }
         }
+    }
+
+    public static void Attach<TControl, TArgs>(AvaloniaProperty<bool> property, string pseudoClass,
+        RoutedEvent<TArgs>? routedEvent = null)
+        where TControl: Control
+        where TArgs: RoutedEventArgs, new()
+    {
+        property.Changed.Subscribe(new AnonymousObserver<AvaloniaPropertyChangedEventArgs<bool>>((args) =>
+        {
+            OnPropertyChanged<TControl, TArgs>(args, pseudoClass, routedEvent);
+        }));
     }
 }
