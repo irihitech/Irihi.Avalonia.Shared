@@ -5,7 +5,7 @@ using Irihi.Avalonia.Shared.Helpers;
 
 namespace Irihi.Avalonia.Shared.UnitTest.Helpers;
 
-public class BooleanPropertyMixinTest
+public class PropertyToPseudoClassMixinTest
 {
     private class Sample : Control
     {
@@ -32,7 +32,15 @@ public class BooleanPropertyMixinTest
     {
         static ValidSample()
         {
-            BooleanPropertyMixin.Attach<ValidSample>(TestProperty, ":test", TestChangedEvent); 
+            PropertyToPseudoClassMixin.Attach<ValidSample>(TestProperty, ":test"); 
+        }
+    }
+
+    private class ValidEventSample : Sample
+    {
+        static ValidEventSample()
+        {
+            PropertyToPseudoClassMixin.Attach<ValidEventSample>(TestProperty, ":test", TestChangedEvent); 
         }
     }
     
@@ -55,7 +63,7 @@ public class BooleanPropertyMixinTest
     [Fact]
     public void Mixin_Attached_EventInvoke_Success()
     {
-        ValidSample sample = new();
+        ValidEventSample sample = new();
         bool flag = false;
         sample.AddHandler(Sample.TestChangedEvent, (_, _) => flag = true);
         sample.Test = true;
@@ -69,6 +77,11 @@ public class BooleanPropertyMixinTest
         bool flag = false;
         sample.AddHandler(Sample.TestChangedEvent, (_, _) => flag = true);
         sample.Test = true;
+        Assert.False(flag);
+        ValidSample sample2 = new();
+        flag = false;
+        sample2.AddHandler(Sample.TestChangedEvent, (_, _) => flag = true);
+        sample2.Test = true;
         Assert.False(flag);
     }
 }

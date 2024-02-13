@@ -7,7 +7,7 @@ using Avalonia.Reactive;
 
 namespace Irihi.Avalonia.Shared.Helpers;
 
-public static class BooleanPropertyMixin
+public static class PropertyToPseudoClassMixin
 {
     public static void Attach<TControl>(AvaloniaProperty<bool> property, string pseudoClass, RoutedEvent<RoutedEventArgs>? routedEvent = null) 
         where TControl: Control
@@ -15,7 +15,7 @@ public static class BooleanPropertyMixin
         property.Changed.Subscribe(new AnonymousObserver<AvaloniaPropertyChangedEventArgs<bool>>((args) =>
         {
             OnPropertyChanged<TControl, RoutedEventArgs>(args, pseudoClass, routedEvent);
-        }));   
+        }));
     }
 
     private static void OnPropertyChanged<TControl, TArgs>(AvaloniaPropertyChangedEventArgs<bool> args, string pseudoClass, RoutedEvent<TArgs>? routedEvent) 
