@@ -1,21 +1,15 @@
-﻿using System.Runtime.CompilerServices;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Reactive;
 
 namespace Irihi.Avalonia.Shared.Helpers;
 
-public static class PropertyToPseudoClassMixin
+public static class AvaloniaPropertyExtensions
 {
-    public static void Attach<TControl>(AvaloniaProperty<bool> property, string pseudoClass, RoutedEvent<RoutedEventArgs>? routedEvent = null) 
+    public static void AffectsPseudoClass<TControl>(this AvaloniaProperty<bool> property, string pseudoClass, RoutedEvent<RoutedEventArgs>? routedEvent = null) 
         where TControl: Control
     {
-        property.Changed.Subscribe(new AnonymousObserver<AvaloniaPropertyChangedEventArgs<bool>>((args) =>
-        {
-            OnPropertyChanged<TControl, RoutedEventArgs>(args, pseudoClass, routedEvent);
-        }));
+        property.Changed.AddClassHandler<TControl, bool>((control, args) => {OnPropertyChanged<TControl, RoutedEventArgs>(args, pseudoClass, routedEvent); });
     }
 
     private static void OnPropertyChanged<TControl, TArgs>(AvaloniaPropertyChangedEventArgs<bool> args, string pseudoClass, RoutedEvent<TArgs>? routedEvent) 
@@ -32,14 +26,11 @@ public static class PropertyToPseudoClassMixin
         }
     }
 
-    public static void Attach<TControl, TArgs>(AvaloniaProperty<bool> property, string pseudoClass,
+    public static void AffectsPseudoClass<TControl, TArgs>(this AvaloniaProperty<bool> property, string pseudoClass,
         RoutedEvent<TArgs>? routedEvent = null)
         where TControl: Control
         where TArgs: RoutedEventArgs, new()
     {
-        property.Changed.Subscribe(new AnonymousObserver<AvaloniaPropertyChangedEventArgs<bool>>((args) =>
-        {
-            OnPropertyChanged<TControl, TArgs>(args, pseudoClass, routedEvent);
-        }));
+        property.Changed.AddClassHandler<TControl, bool>((control, args)=> {OnPropertyChanged<TControl, TArgs>(args, pseudoClass, routedEvent); });
     }
 }

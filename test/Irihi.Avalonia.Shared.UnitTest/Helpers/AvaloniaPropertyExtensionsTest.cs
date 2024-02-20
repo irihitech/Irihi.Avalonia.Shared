@@ -5,7 +5,7 @@ using Irihi.Avalonia.Shared.Helpers;
 
 namespace Irihi.Avalonia.Shared.UnitTest.Helpers;
 
-public class PropertyToPseudoClassMixinTest
+public class AvaloniaPropertyExtensionsTest
 {
     private class Sample : Control
     {
@@ -32,7 +32,7 @@ public class PropertyToPseudoClassMixinTest
     {
         static ValidSample()
         {
-            PropertyToPseudoClassMixin.Attach<ValidSample>(TestProperty, ":test"); 
+            TestProperty.AffectsPseudoClass<ValidSample>(":test"); 
         }
     }
 
@@ -40,7 +40,7 @@ public class PropertyToPseudoClassMixinTest
     {
         static ValidEventSample()
         {
-            PropertyToPseudoClassMixin.Attach<ValidEventSample>(TestProperty, ":test", TestChangedEvent); 
+            TestProperty.AffectsPseudoClass<ValidEventSample>(":test", TestChangedEvent); 
         }
     }
     
