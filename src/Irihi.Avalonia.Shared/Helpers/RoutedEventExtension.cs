@@ -52,4 +52,24 @@ public static class RoutedEventExtension
         var result = new ReadonlyDisposableCollection(list);
         return result;
     }
+    
+    public static IDisposable AddDisposableHandler<TArgs>(this RoutedEvent<TArgs> routedEvent, 
+        EventHandler<TArgs> handler, 
+        RoutingStrategies strategies = RoutingStrategies.Bubble | RoutingStrategies.Direct, 
+        bool handledEventsToo = false, 
+        params Interactive?[] controls)
+        where TArgs : RoutedEventArgs
+    {
+        List<IDisposable?> list = new List<IDisposable?>(controls.Length);
+        foreach (var t in controls)
+        {
+            var disposable = t?.AddDisposableHandler(routedEvent, handler, strategies, handledEventsToo);
+            if (disposable != null)
+            {
+                list.Add(disposable);
+            }
+        }
+        var result = new ReadonlyDisposableCollection(list);
+        return result;
+    }
 }
