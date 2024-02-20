@@ -18,7 +18,20 @@ public class RoutedEventExtensionTest
         Button.ClickEvent.AddHandler(Handler, button);
         button.RaiseEvent(new RoutedEventArgs(){ Source = button, RoutedEvent = Button.ClickEvent});
         Assert.Equal(1, count);
-        
+    }
+    
+    [Fact]
+    public void EventHandler_Add_Null_Success()
+    {
+        var button = new Button();
+        int count = 0;
+        void Handler(object? sender, RoutedEventArgs args)
+        {
+            count++;
+        }
+        Button.ClickEvent.AddHandler(Handler, button, null);
+        button.RaiseEvent(new RoutedEventArgs(){ Source = button, RoutedEvent = Button.ClickEvent});
+        Assert.Equal(1, count);
     }
     
     [Fact]
