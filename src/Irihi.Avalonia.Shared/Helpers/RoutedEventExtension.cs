@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Irihi.Avalonia.Shared.Reactive;
 
 namespace Irihi.Avalonia.Shared.Helpers;
 
@@ -34,5 +35,21 @@ public static class RoutedEventExtension
         {
             t?.RemoveHandler(routedEvent, handler);
         }
+    }
+
+    public static IDisposable AddDisposableHandler<TArgs>(this RoutedEvent<TArgs> routedEvent, EventHandler<TArgs> handler, params Interactive?[] controls)
+        where TArgs : RoutedEventArgs
+    {
+        List<IDisposable?> list = new List<IDisposable?>(controls.Length);
+        foreach (var t in controls)
+        {
+            var disposable = t?.AddDisposableHandler(routedEvent, handler);
+            if (disposable != null)
+            {
+                list.Add(disposable);
+            }
+        }
+        var result = new ReadonlyDisposableCollection(list);
+        return result;
     }
 }
