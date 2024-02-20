@@ -17,20 +17,18 @@ public static class AvaloniaPropertyExtension
     public static void AffectsPseudoClass<TControl>(this AvaloniaProperty<bool> property, string pseudoClass, RoutedEvent<RoutedEventArgs>? routedEvent = null) 
         where TControl: Control
     {
-        property.Changed.AddClassHandler<TControl, bool>((control, args) => {OnPropertyChanged<TControl, RoutedEventArgs>(args, pseudoClass, routedEvent); });
+        property.Changed.AddClassHandler<TControl, bool>((control, args) => {OnPropertyChanged(control, args, pseudoClass, routedEvent); });
     }
 
-    private static void OnPropertyChanged<TControl, TArgs>(AvaloniaPropertyChangedEventArgs<bool> args, string pseudoClass, RoutedEvent<TArgs>? routedEvent) 
+    private static void OnPropertyChanged<TControl, TArgs>(TControl control, AvaloniaPropertyChangedEventArgs<bool> args, string pseudoClass, RoutedEvent<TArgs>? routedEvent) 
         where TControl: Control
         where TArgs: RoutedEventArgs, new()
     {
-        if(args.Sender is TControl control)
+        if (args.Sender != control) return;
+        PseudolassesExtensions.Set(control.Classes, pseudoClass, args.NewValue.Value);
+        if (routedEvent is not null)
         {
-            PseudolassesExtensions.Set(control.Classes, pseudoClass, args.NewValue.Value);
-            if (routedEvent is not null)
-            {
-                control.RaiseEvent(new TArgs() { RoutedEvent = routedEvent });
-            }
+            control.RaiseEvent(new TArgs() { RoutedEvent = routedEvent });
         }
     }
 
@@ -39,7 +37,7 @@ public static class AvaloniaPropertyExtension
         where TControl: Control
         where TArgs: RoutedEventArgs, new()
     {
-        property.Changed.AddClassHandler<TControl, bool>((control, args)=> {OnPropertyChanged<TControl, TArgs>(args, pseudoClass, routedEvent); });
+        property.Changed.AddClassHandler<TControl, bool>((control, args)=> {OnPropertyChanged(control, args, pseudoClass, routedEvent); });
     }
 
 }
