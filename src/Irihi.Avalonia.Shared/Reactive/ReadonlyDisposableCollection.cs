@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.ObjectModel;
 
 namespace Irihi.Avalonia.Shared.Reactive;

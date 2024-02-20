@@ -1,5 +1,4 @@
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Media;
 
 namespace Irihi.Avalonia.Shared.Shapes;

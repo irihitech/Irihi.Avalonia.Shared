@@ -96,7 +96,7 @@ public class RoutedEventExtensionTest
         {
             count++;
         }
-        var disposable = Button.ClickEvent.AddDisposableHandler(Handler, button, button2);
+        var _ = Button.ClickEvent.AddDisposableHandler(Handler, button, button2);
         button.RaiseEvent(new RoutedEventArgs(){ Source = button, RoutedEvent = Button.ClickEvent});
         button2.RaiseEvent(new RoutedEventArgs(){ Source = button2, RoutedEvent = Button.ClickEvent});
         Assert.Equal(2, count);
