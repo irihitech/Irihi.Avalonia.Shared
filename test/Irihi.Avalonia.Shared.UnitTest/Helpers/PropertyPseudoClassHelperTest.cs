@@ -5,7 +5,7 @@ using Irihi.Avalonia.Shared.Helpers;
 
 namespace Irihi.Avalonia.Shared.UnitTest.Helpers;
 
-public class AvaloniaPropertyExtensionsTest
+public class PropertyPseudoClassHelperTest
 {
     private class Sample : Control
     {
