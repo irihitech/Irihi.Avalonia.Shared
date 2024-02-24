@@ -16,5 +16,8 @@ public class ObservableExtensionTest
         textBlock.Text = "Hello, World!";
         disposable.Dispose();
         Assert.True(called);
+        called = false;
+        textBlock.Text = "Hello, World!";
+        Assert.False(called);
     }
 }
