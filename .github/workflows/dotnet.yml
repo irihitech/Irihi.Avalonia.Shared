@@ -26,3 +26,11 @@ jobs:
       run: dotnet build --no-restore ./src
     - name: Test
       run: dotnet test --no-build --verbosity normal ./src
+    - name: Pack
+      run: dotnet pack ./src/Irihi.Avalonia.Shared -o ./nugets
+    - name: Upload
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: packages
+        path: |
+          ./nugets
