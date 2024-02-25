@@ -9,6 +9,9 @@
     mc:Ignorable="d">
     <StackPanel HorizontalAlignment="Left">
         <CheckBox Margin="0 0 -7 0"></CheckBox>
+        <Panel Width="100" Height="100">
+            <iri:PureRectangle Background="Yellow"></iri:PureRectangle>
+        </Panel>
         <iri:PureRectangle Width="30" Height="40" Background="Red" HorizontalAlignment="Left"/>
         <iri:PureCircle Diameter="50" Background="Blue"></iri:PureCircle>
         <Panel>

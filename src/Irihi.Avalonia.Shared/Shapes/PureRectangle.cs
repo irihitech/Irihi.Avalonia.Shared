@@ -26,6 +26,6 @@ public class PureRectangle: Control
     public override void Render(DrawingContext context)
     {
         base.Render(context);
-        context.DrawRectangle(Background, null, new Rect(new Size(Width, Height)));
+        context.DrawRectangle(Background, null, new Rect(Bounds.Size));
     }
 }
