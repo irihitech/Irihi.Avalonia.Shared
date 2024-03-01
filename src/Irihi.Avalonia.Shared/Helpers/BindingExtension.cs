@@ -10,6 +10,12 @@ public static class BindingExtension
     {
         if (binding is null) return new ResultDisposable(new EmptyDisposable(), false);
         return new ResultDisposable(obj.Bind(property, binding), true);
-
+    }
+    
+    public static ResultDisposable TryBindIfUnset(this AvaloniaObject obj, AvaloniaProperty property, IBinding? binding)
+    {
+        if (binding is null) return new ResultDisposable(new EmptyDisposable(), false);
+        if(obj.IsSet(property)) return new ResultDisposable(new EmptyDisposable(), false);
+        return new ResultDisposable(obj.Bind(property, binding), true);
     }
 }

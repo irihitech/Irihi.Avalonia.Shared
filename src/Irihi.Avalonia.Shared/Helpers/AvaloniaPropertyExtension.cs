@@ -40,4 +40,16 @@ public static class AvaloniaPropertyExtension
         property.Changed.AddClassHandler<TControl, bool>((control, args)=> {OnPropertyChanged(control, args, pseudoClass, routedEvent); });
     }
 
+    public static void SetCurrentValueIfUnset<T>(this AvaloniaObject target, AvaloniaProperty<T> property, T value)
+    {
+        if (target.IsSet(property)) return;
+        target.SetCurrentValue(property, value);
+    }
+    
+    public static void SetValueIfUnset<T>(this AvaloniaObject target, AvaloniaProperty<T> property, T value)
+    {
+        if (target.IsSet(property)) return;
+        target.SetValue(property, value);
+    }
+
 }
