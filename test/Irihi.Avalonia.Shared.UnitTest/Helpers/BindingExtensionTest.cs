@@ -90,4 +90,20 @@ public class BindingExtensionTest
         t.Background = new SolidColorBrush(Colors.Yellow);
         Assert.Equal(t.Foreground?.ToString(), new SolidColorBrush(Colors.Black).ToString());
     }
+
+    [Fact]
+    public void SetBindingIfUnset_Null_Binding_No_Effect()
+    {
+        TextBlock t = new TextBlock();
+        t.Background = new SolidColorBrush(Colors.White);
+        Assert.False(t.IsSet(TextBlock.ForegroundProperty));
+        var result = t.TryBindIfUnset(TextBlock.ForegroundProperty, null);
+        Assert.False(result.Result);
+        Assert.Equal(t.Foreground?.ToString(), new SolidColorBrush(Colors.Black).ToString());
+        t.Background = new SolidColorBrush(Colors.Yellow);
+        Assert.Equal(t.Foreground?.ToString(), new SolidColorBrush(Colors.Black).ToString());
+        
+        // Dispose binding
+        result.Dispose();
+    }
 }
