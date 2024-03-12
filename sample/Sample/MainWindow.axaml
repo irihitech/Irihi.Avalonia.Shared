@@ -10,6 +10,6 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <StackPanel HorizontalAlignment="Left">
-
+        <TextBlock Text="Hello World"></TextBlock>
     </StackPanel>
 </Window>
