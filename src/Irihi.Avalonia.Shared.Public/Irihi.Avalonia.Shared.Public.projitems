@@ -9,9 +9,6 @@
     <Import_RootNamespace>Irihi.Avalonia.Shared.ShareProject</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Attributes\DesignerItemType.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Attributes\DesignerItemTypeAttribute.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Attributes\InvisibleToDesignerAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\PartNames.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\PseudoClasses.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IClearControl.cs" />
@@ -29,9 +26,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Shapes\PureCircle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Shapes\PureRectangle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Shapes\PureRing.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)MarkupExtensions\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Property\" />
   </ItemGroup>
 </Project>

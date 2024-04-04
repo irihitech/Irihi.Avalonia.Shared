@@ -1,6 +1,6 @@
 ﻿namespace Irihi.Avalonia.Shared.Common;
 
-public static class PartNames
+public static partial class PartNames
 {
     public const string PART_ContentPresenter = "PART_ContentPresenter";
     public const string PART_HeaderPresenter = "PART_HeaderPresenter";
