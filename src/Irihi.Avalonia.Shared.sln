@@ -1,10 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Irihi.Avalonia.Shared", "Irihi.Avalonia.Shared\Irihi.Avalonia.Shared.csproj", "{2C350A8C-4253-45CE-B565-6F4275FC11CD}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Irihi.Avalonia.Shared", "Irihi.Avalonia.Shared\Irihi.Avalonia.Shared.csproj", "{2C350A8C-4253-45CE-B565-6F4275FC11CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "..\sample\Sample\Sample.csproj", "{92C8A1A1-21CB-41B4-BAC7-1A7763300D1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample", "..\sample\Sample\Sample.csproj", "{92C8A1A1-21CB-41B4-BAC7-1A7763300D1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Irihi.Avalonia.Shared.UnitTest", "..\test\Irihi.Avalonia.Shared.UnitTest\Irihi.Avalonia.Shared.UnitTest.csproj", "{5AD4A73B-4B85-4C56-BAB3-A25D526F0B07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Irihi.Avalonia.Shared.UnitTest", "..\test\Irihi.Avalonia.Shared.UnitTest\Irihi.Avalonia.Shared.UnitTest.csproj", "{5AD4A73B-4B85-4C56-BAB3-A25D526F0B07}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Irihi.Avalonia.Shared.Public", "Irihi.Avalonia.Shared.Public\Irihi.Avalonia.Shared.Public.shproj", "{F7A8869A-C381-4445-BC80-F87739D6A496}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +29,12 @@ Global
 		{5AD4A73B-4B85-4C56-BAB3-A25D526F0B07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AD4A73B-4B85-4C56-BAB3-A25D526F0B07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AD4A73B-4B85-4C56-BAB3-A25D526F0B07}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Irihi.Avalonia.Shared.ShareProject\Irihi.Avalonia.Shared.ShareProject.projitems*{2c350a8c-4253-45ce-b565-6f4275fc11cd}*SharedItemsImports = 5
+		Irihi.Avalonia.Shared.ShareProject\Irihi.Avalonia.Shared.ShareProject.projitems*{f7a8869a-c381-4445-bc80-f87739d6a496}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

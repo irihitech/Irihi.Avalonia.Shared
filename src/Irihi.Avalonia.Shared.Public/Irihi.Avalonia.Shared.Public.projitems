@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>4AFEBE77-61CA-45EB-90E8-933B1A714CC8</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Irihi.Avalonia.Shared.ShareProject</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Common\PartNames.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\PseudoClasses.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Contracts\IClearControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Contracts\IDialogContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Contracts\IInnerContentControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Contracts\IOuterContentControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Contracts\IPopupInnerContent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Contracts\IPopupOuterContent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\AvaloniaPropertyExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\BindingExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\RoutedEventExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReadonlyDisposableCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reactive\ResultDisposable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Shapes\PureCircle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Shapes\PureRectangle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Shapes\PureRing.cs" />
+  </ItemGroup>
+</Project>

@@ -15,13 +15,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="MarkupExtensions\" />
-      <Folder Include="Property\" />
-      <None Include="irihi.png" Pack="true" PackagePath=""/>
+      <None Include="irihi.png" Pack="true" PackagePath="" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Avalonia" Version="11.0.0" />
     </ItemGroup>
+
+    <Import Project="..\Irihi.Avalonia.Shared.Public\Irihi.Avalonia.Shared.Public.projitems" Label="Shared" />
 
 </Project>
