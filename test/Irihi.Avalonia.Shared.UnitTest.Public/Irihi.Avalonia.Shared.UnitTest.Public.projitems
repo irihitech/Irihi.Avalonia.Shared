@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>DA1E3BE1-D211-4BAF-8581-34DC94D57F02</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Irihi.Avalonia.Shared.UnitTest.Public</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalUsings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\AvaloniaPropertyExtensionTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\BindingExtensionTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableExtensionTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\PropertyPseudoClassHelperTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\RoutedEventExtensionTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Shapes\PureCircleTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Shapes\PureRingTest.cs" />
+  </ItemGroup>
+</Project>
