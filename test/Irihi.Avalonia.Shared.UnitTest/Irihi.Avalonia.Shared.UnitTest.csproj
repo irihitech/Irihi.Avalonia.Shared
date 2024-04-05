@@ -9,8 +9,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0"/>
-        <PackageReference Include="xunit" Version="2.4.2"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+        <PackageReference Include="xunit" Version="2.4.2" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
@@ -24,5 +24,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\src\Irihi.Avalonia.Shared\Irihi.Avalonia.Shared.csproj" />
     </ItemGroup>
+
+    <Import Project="..\Irihi.Avalonia.Shared.UnitTest.Public\Irihi.Avalonia.Shared.UnitTest.Public.projitems" Label="Shared" />
 
 </Project>
