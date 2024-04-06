@@ -24,7 +24,6 @@ public static class AvaloniaPropertyExtension
         where TControl: Control
         where TArgs: RoutedEventArgs, new()
     {
-        if (args.Sender != control) return;
         PseudolassesExtensions.Set(control.Classes, pseudoClass, args.NewValue.Value);
         if (routedEvent is not null)
         {

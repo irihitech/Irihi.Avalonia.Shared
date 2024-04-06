@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)GlobalUsings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\AffectsPseudoClassTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AvaloniaPropertyExtensionTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BindingExtensionTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableExtensionTest.cs" />
