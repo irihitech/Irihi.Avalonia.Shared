@@ -51,6 +51,20 @@ public class RoutedEventExtensionTest
     }
     
     [Fact]
+    public void EventHandler_Add_With_Strategy_Success()
+    {
+        var button = new Button();
+        int count = 0;
+        void Handler(object? sender, RoutedEventArgs args)
+        {
+            count++;
+        }
+        Button.ClickEvent.AddHandler(Handler, RoutingStrategies.Bubble, false, button);
+        button.RaiseEvent(new RoutedEventArgs(){ Source = button, RoutedEvent = Button.ClickEvent});
+        Assert.Equal(1, count);
+    }
+    
+    [Fact]
     public void EventHandler_Remove_Without_SideEffect()
     {
         var button = new Button();
@@ -117,6 +131,26 @@ public class RoutedEventExtensionTest
         button2.RaiseEvent(new RoutedEventArgs(){ Source = button2, RoutedEvent = Button.ClickEvent});
         Assert.Equal(2, count);
         disposable.Dispose();
+        button.RaiseEvent(new RoutedEventArgs(){ Source = button, RoutedEvent = Button.ClickEvent});
+        button2.RaiseEvent(new RoutedEventArgs(){ Source = button2, RoutedEvent = Button.ClickEvent});
+        Assert.Equal(2, count);
+    }
+    
+    [Fact]
+    public void EventHandler_AddDisposable_With_Strategy_Success()
+    {
+        var button = new Button();
+        var button2 = new Button();
+        int count = 0;
+        void Handler(object? sender, RoutedEventArgs args)
+        {
+            count++;
+        }
+
+        var _ = Button.ClickEvent.AddDisposableHandler(Handler, 
+            RoutingStrategies.Bubble, 
+            false, 
+            button, button2);
         button.RaiseEvent(new RoutedEventArgs(){ Source = button, RoutedEvent = Button.ClickEvent});
         button2.RaiseEvent(new RoutedEventArgs(){ Source = button2, RoutedEvent = Button.ClickEvent});
         Assert.Equal(2, count);
