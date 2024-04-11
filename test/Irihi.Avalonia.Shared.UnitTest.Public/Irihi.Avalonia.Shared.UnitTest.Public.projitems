@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AffectsPseudoClassTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AvaloniaPropertyExtensionTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BindingExtensionTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\LogicalHelpersTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableExtensionTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\PropertyPseudoClassHelperTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\RoutedEventExtensionTest.cs" />
