@@ -8,7 +8,7 @@ public class LogicalHelpersTest
     [Fact]
     public void CalculateDistanceFromLogicalParent_Null()
     {
-        Assert.Equal(-1, (null as Button)!.CalculateDistanceFromLogicalParent<StackPanel>());
+        Assert.Equal(-1, (null as Button).CalculateDistanceFromLogicalParent<StackPanel>());
     }
     
     [Fact]

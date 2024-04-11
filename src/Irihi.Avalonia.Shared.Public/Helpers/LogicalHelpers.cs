@@ -4,7 +4,7 @@ namespace Irihi.Avalonia.Shared.Helpers;
 
 public static class LogicalHelpers
 {
-    public static int CalculateDistanceFromLogicalParent<T>(this ILogical logical, int @default = -1) where T: ILogical
+    public static int CalculateDistanceFromLogicalParent<T>(this ILogical? logical, int @default = -1) where T: ILogical
     {
         int distance = 0;
         ILogical? parent = logical;
