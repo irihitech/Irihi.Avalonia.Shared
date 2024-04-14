@@ -10,7 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Common\PartNames.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\PseudoClasses.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\PseudoClassName.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IClearControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IDialogContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IInnerContentControl.cs" />

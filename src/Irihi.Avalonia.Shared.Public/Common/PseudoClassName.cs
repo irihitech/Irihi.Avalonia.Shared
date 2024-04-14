@@ -1,6 +1,6 @@
 ﻿namespace Irihi.Avalonia.Shared.Common;
 
-public static partial class PseudoClasses
+public static partial class PseudoClassName
 {
     public const string PC_Disabled = ":disabled";
     public const string PC_Pointerover = ":pointerover";
