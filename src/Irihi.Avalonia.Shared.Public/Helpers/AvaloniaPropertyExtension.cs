@@ -13,6 +13,14 @@ public static class AvaloniaPropertyExtension
             obj?.SetValue(property, value);
         }
     }
+
+    public static void SetValue<TValue, TItem>(this AvaloniaProperty<TValue> property, TValue value, params TItem?[] objects) where TItem: AvaloniaObject
+    {
+        foreach (var obj in objects)
+        {
+            obj?.SetValue(property, value);
+        }
+    }
     
     public static void AffectsPseudoClass<TControl>(this AvaloniaProperty<bool> property, string pseudoClass, RoutedEvent<RoutedEventArgs>? routedEvent = null) 
         where TControl: Control

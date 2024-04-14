@@ -33,4 +33,15 @@ public class AvaloniaPropertyExtensionTest
         Visual.IsVisibleProperty.SetValue(true, b);
         Assert.True(b.IsVisible);
     }
+    
+    [Fact]
+    public void Property_MultipleObject_InArray()
+    {
+        Button b1 = new Button();
+        Button b2 = new Button();
+        Button[] buttons = {b1, b2};
+        Visual.IsVisibleProperty.SetValue(true, buttons);
+        Assert.True(b1.IsVisible);
+        Assert.True(b2.IsVisible);
+    }
 }
