@@ -30,6 +30,7 @@ public class RoutedEventExtensionTest
             count++;
         }
         Button.ClickEvent.AddHandler(Handler, button, null);
+        Button.ClickEvent.AddHandler(Handler, null, null);
         button.RaiseEvent(new RoutedEventArgs(){ Source = button, RoutedEvent = Button.ClickEvent});
         Assert.Equal(1, count);
     }
