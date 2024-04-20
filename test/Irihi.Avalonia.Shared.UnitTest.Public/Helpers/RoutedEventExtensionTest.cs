@@ -118,6 +118,40 @@ public class RoutedEventExtensionTest
     }
     
     [Fact]
+    public void EventHandler_AddDisposable_Null_Success()
+    {
+        var button = new Button();
+        int count = 0;
+        void Handler(object? sender, RoutedEventArgs args)
+        {
+            count++;
+        }
+        var _ = Button.ClickEvent.AddDisposableHandler(Handler, null, null);
+        button.RaiseEvent(new RoutedEventArgs(){ Source = button, RoutedEvent = Button.ClickEvent});
+        Assert.Equal(0, count);
+    }
+    
+    [Fact]
+    public void EventHandler_AddDisposable_Multiple_Success()
+    {
+        var button = new Button();
+        var button2 = new Button();
+        var button3 = new Button();
+        int count = 0;
+        void Handler(object? sender, RoutedEventArgs args)
+        {
+            count++;
+        }
+        var result = Button.ClickEvent.AddDisposableHandler(Handler, button, button2, button3);
+        result.Dispose();
+        ;
+        button.RaiseEvent(new RoutedEventArgs(){ Source = button, RoutedEvent = Button.ClickEvent});
+        button2.RaiseEvent(new RoutedEventArgs(){ Source = button2, RoutedEvent = Button.ClickEvent});
+        button3.RaiseEvent(new RoutedEventArgs(){ Source = button3, RoutedEvent = Button.ClickEvent});
+        Assert.Equal(0, count);
+    }
+    
+    [Fact]
     public void EventHandler_AddDisposable_Dispose_Success()
     {
         var button = new Button();
