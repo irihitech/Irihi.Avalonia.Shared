@@ -62,7 +62,7 @@ public static class RoutedEventExtension
     public static void AddHandler<TArgs, TControl>(
         this RoutedEvent<TArgs> routedEvent, 
         EventHandler<TArgs> handler, 
-        IEnumerable<TControl> controls, 
+        IEnumerable<TControl?> controls, 
         RoutingStrategies strategies = RoutingStrategies.Bubble | RoutingStrategies.Direct, 
         bool handledEventsToo = false)
         where TArgs : RoutedEventArgs
@@ -102,7 +102,7 @@ public static class RoutedEventExtension
     public static void RemoveHandler<TArgs, TControl>(
         this RoutedEvent<TArgs> routedEvent, 
         EventHandler<TArgs> handler, 
-        IEnumerable<TControl> controls)
+        IEnumerable<TControl?> controls)
         where TArgs : RoutedEventArgs
         where TControl: Interactive
     {
@@ -118,7 +118,7 @@ public static class RoutedEventExtension
         params Interactive?[] controls)
         where TArgs : RoutedEventArgs
     {
-        List<IDisposable?> list = new List<IDisposable?>(controls.Length);
+        var list = new List<IDisposable?>(controls.Length);
         foreach (var t in controls)
         {
             var disposable = t?.AddDisposableHandler(routedEvent, handler);
