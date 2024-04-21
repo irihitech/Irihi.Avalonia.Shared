@@ -40,7 +40,17 @@ public class AvaloniaPropertyExtensionTest
         Button b1 = new Button();
         Button b2 = new Button();
         Button[] buttons = {b1, b2};
-        Visual.IsVisibleProperty.SetValue(true, buttons);
+        Visual.IsVisibleProperty.SetValue<bool, Button>(true, buttons);
+        Assert.True(b1.IsVisible);
+        Assert.True(b2.IsVisible);
+    }
+    
+    [Fact]
+    public void Property_MultipleObject_InList()
+    {
+        Button b1 = new Button();
+        Button b2 = new Button();
+        Visual.IsVisibleProperty.SetValue(true, new List<Button> { b1, b2 });
         Assert.True(b1.IsVisible);
         Assert.True(b2.IsVisible);
     }

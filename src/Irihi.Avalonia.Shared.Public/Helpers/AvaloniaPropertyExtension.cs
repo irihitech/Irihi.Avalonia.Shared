@@ -6,7 +6,10 @@ namespace Irihi.Avalonia.Shared.Helpers;
 
 public static class AvaloniaPropertyExtension
 {
-    public static void SetValue<T>(this AvaloniaProperty<T> property, T value, params AvaloniaObject?[] objects)
+    public static void SetValue<T>(
+        this AvaloniaProperty<T> property, 
+        T value, 
+        params AvaloniaObject?[] objects)
     {
         foreach (var obj in objects)
         {
@@ -14,21 +17,32 @@ public static class AvaloniaPropertyExtension
         }
     }
 
-    public static void SetValue<TValue, TItem>(this AvaloniaProperty<TValue> property, TValue value, params TItem?[] objects) where TItem: AvaloniaObject
+    public static void SetValue<T, TControl>(
+        this AvaloniaProperty<T> property, 
+        T value, 
+        IEnumerable<TControl?> objects) 
+        where TControl: AvaloniaObject
     {
         foreach (var obj in objects)
         {
             obj?.SetValue(property, value);
-        }
+        }        
     }
     
-    public static void AffectsPseudoClass<TControl>(this AvaloniaProperty<bool> property, string pseudoClass, RoutedEvent<RoutedEventArgs>? routedEvent = null) 
+    public static void AffectsPseudoClass<TControl>(
+        this AvaloniaProperty<bool> property, 
+        string pseudoClass, 
+        RoutedEvent<RoutedEventArgs>? routedEvent = null) 
         where TControl: Control
     {
         property.Changed.AddClassHandler<TControl, bool>((control, args) => {OnPropertyChanged(control, args, pseudoClass, routedEvent); });
     }
 
-    private static void OnPropertyChanged<TControl, TArgs>(TControl control, AvaloniaPropertyChangedEventArgs<bool> args, string pseudoClass, RoutedEvent<TArgs>? routedEvent) 
+    private static void OnPropertyChanged<TControl, TArgs>(
+        TControl control, 
+        AvaloniaPropertyChangedEventArgs<bool> args, 
+        string pseudoClass, 
+        RoutedEvent<TArgs>? routedEvent) 
         where TControl: Control
         where TArgs: RoutedEventArgs, new()
     {
@@ -39,7 +53,9 @@ public static class AvaloniaPropertyExtension
         }
     }
 
-    public static void AffectsPseudoClass<TControl, TArgs>(this AvaloniaProperty<bool> property, string pseudoClass,
+    public static void AffectsPseudoClass<TControl, TArgs>(
+        this AvaloniaProperty<bool> property, 
+        string pseudoClass,
         RoutedEvent<TArgs>? routedEvent = null)
         where TControl: Control
         where TArgs: RoutedEventArgs, new()
