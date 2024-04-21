@@ -405,4 +405,26 @@ public class RoutedEventExtensionTest
         
         Assert.Equal(2, count);
     }
+    
+    [Fact]
+    public void EventHandler_AddHandler_Multi_Type_List_Success()
+    {
+        var button = new Button();
+        var panel = new Panel();
+        var button2 = new Button();
+        int count = 0;
+        void Handler(object? sender, RoutedEventArgs args)
+        {
+            count++;
+        }
+        Button.ClickEvent.AddDisposableHandler<RoutedEventArgs, Button>(Handler, RoutingStrategies.Bubble, false, button, button2);
+        button.RaiseEvent(new RoutedEventArgs(){ Source = button, RoutedEvent = Button.ClickEvent});
+        
+        Assert.Equal(1, count);
+        
+        Button.ClickEvent.RemoveHandler(Handler, button, button2);
+        button.RaiseEvent(new RoutedEventArgs(){ Source = button, RoutedEvent = Button.ClickEvent});
+        
+        Assert.Equal(1, count);
+    }
 }
