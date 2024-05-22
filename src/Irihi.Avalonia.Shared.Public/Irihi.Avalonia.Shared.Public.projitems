@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AvaloniaPropertyExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BindingExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\LogicalHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\MathHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\RoutedEventExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReadonlyDisposableCollection.cs" />
