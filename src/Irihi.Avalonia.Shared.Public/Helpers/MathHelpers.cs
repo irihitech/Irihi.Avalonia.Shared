@@ -34,16 +34,16 @@ public static class MathHelpers
 
     public static decimal SafeClamp(decimal value, decimal min, decimal max)
     {
-        var minimum = Math.Min(min, max);
-        var maximum = Math.Max(min, max);
-        return Math.Min(Math.Max(value, minimum), maximum);
+        (min, max) = GetMinMax(min, max);
+        if (value < min) return min;
+        return value > max ? max : value;
     }
 
     public static int SafeClamp(int value, int min, int max)
     {
-        var minimum = Math.Min(min, max);
-        var maximum = Math.Max(min, max);
-        return Math.Min(Math.Max(value, minimum), maximum);
+        (min, max) = GetMinMax(min, max);
+        if (value < min) return min;
+        return value > max ? max : value;
     }
     
     public static float SafeClamp(float value, float min, float max)
