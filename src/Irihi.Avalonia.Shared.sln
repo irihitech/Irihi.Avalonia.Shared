@@ -13,9 +13,10 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Irihi.Avalonia.Shared.Publi
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Irihi.Avalonia.Shared.UnitTest.Public", "..\test\Irihi.Avalonia.Shared.UnitTest.Public\Irihi.Avalonia.Shared.UnitTest.Public.shproj", "{222449F9-96D5-409E-9627-AA1DE6219B26}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectFiles", "ProjectFiles", "{A7FDE117-37A4-41D0-8FE4-13849541365E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFiles", "SolutionFiles", "{A7FDE117-37A4-41D0-8FE4-13849541365E}"
 	ProjectSection(SolutionItems) = preProject
-		..\.github\workflows\dotnet.yml = ..\.github\workflows\dotnet.yml
+		..\.github\workflows\test.yml = ..\.github\workflows\test.yml
+		..\.github\workflows\pack.yml = ..\.github\workflows\pack.yml
 	EndProjectSection
 EndProject
 Global
