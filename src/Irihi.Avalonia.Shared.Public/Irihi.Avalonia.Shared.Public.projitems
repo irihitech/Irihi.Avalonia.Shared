@@ -9,6 +9,9 @@
     <Import_RootNamespace>Irihi.Avalonia.Shared.ShareProject</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Common\IRIHI_CommandBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\IRIHI_CommandBase`T.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\IRIHI_ObservableBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\PartNames.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\PseudoClassName.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IClearControl.cs" />
