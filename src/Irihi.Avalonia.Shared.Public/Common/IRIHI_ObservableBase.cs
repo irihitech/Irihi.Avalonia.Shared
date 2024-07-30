@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace Irihi.Avalonia.Shared.Common;
@@ -17,7 +16,7 @@ public class IRIHI_ObservableBase: INotifyPropertyChanged, INotifyPropertyChangi
     
     protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
     {
-        PropertyChanged ?.Invoke((object) this, e);
+        PropertyChanged ?.Invoke(this, e);
     }
     
     protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)

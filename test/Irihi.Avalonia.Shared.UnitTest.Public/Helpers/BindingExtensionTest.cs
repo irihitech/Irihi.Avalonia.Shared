@@ -1,8 +1,6 @@
-﻿using Avalonia;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Media;
 using Irihi.Avalonia.Shared.Helpers;
-using Irihi.Avalonia.Shared.Reactive;
 
 namespace Irihi.Avalonia.Shared.UnitTest.Helpers;
 

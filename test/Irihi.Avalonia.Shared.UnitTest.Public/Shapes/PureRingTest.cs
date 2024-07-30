@@ -1,9 +1,4 @@
-using System.ComponentModel;
-using System.Net.Http.Headers;
 using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Media;
 using Irihi.Avalonia.Shared.Shapes;
 
 namespace Irihi.Avalonia.Shared.UnitTest.Shapes;

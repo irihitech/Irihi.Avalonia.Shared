@@ -17,8 +17,8 @@ public class LogicalHelpersTest
         var parent = new StackPanel();
         var child = new Button();
         parent.Children.Add(child);
-        Assert.Equal(1, child.CalculateDistanceFromLogicalParent<StackPanel>(-1));
-        Assert.Equal(-1, child.CalculateDistanceFromLogicalParent<Grid>(-1));
+        Assert.Equal(1, child.CalculateDistanceFromLogicalParent<StackPanel>());
+        Assert.Equal(-1, child.CalculateDistanceFromLogicalParent<Grid>());
     }
     
     [Fact]

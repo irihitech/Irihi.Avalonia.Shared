@@ -1,6 +1,4 @@
-using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Xunit;
 
 namespace Irihi.Avalonia.Shared.Common.Tests;
 
@@ -32,7 +30,7 @@ public class IRIHI_ObservableBaseTests
     {
         var testObject = new TestObservable();
         bool eventFired = false;
-        testObject.PropertyChanged += (sender, e) =>
+        testObject.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(TestObservable.TestProperty))
                 eventFired = true;
@@ -49,7 +47,7 @@ public class IRIHI_ObservableBaseTests
         var testObject = new TestObservable();
         testObject.TestProperty = "Initial Value";
         bool eventFired = false;
-        testObject.PropertyChanged += (sender, e) => eventFired = true;
+        testObject.PropertyChanged += (_, _) => eventFired = true;
 
         testObject.TestProperty = "Initial Value";
 

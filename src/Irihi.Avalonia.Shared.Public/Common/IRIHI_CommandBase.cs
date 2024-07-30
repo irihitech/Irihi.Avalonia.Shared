@@ -25,12 +25,12 @@ public class IRIHI_CommandBase: ICommand
     }
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool CanExecute(object parameter)
+    public bool CanExecute(object? parameter)
     {
         return _canExecute is null || _canExecute.Invoke();
     }
 
-    public void Execute(object parameter)
+    public void Execute(object? parameter)
     {
         _execute.Invoke();
     }

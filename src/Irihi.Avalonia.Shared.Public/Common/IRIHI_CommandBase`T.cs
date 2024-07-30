@@ -30,7 +30,7 @@ public class IRIHI_CommandBase<T>: ICommand
         return _canExecute is null || _canExecute.Invoke(parameter);
     }
     
-    public bool CanExecute(object parameter)
+    public bool CanExecute(object? parameter)
     {
         if (!TryGetCommandArgument(parameter, out var result))
         {
@@ -45,7 +45,7 @@ public class IRIHI_CommandBase<T>: ICommand
         _execute(parameter);
     }
 
-    public void Execute(object parameter)
+    public void Execute(object? parameter)
     {
         if (!TryGetCommandArgument(parameter, out var result))
         {
@@ -59,7 +59,7 @@ public class IRIHI_CommandBase<T>: ICommand
     {
         if (parameter is null && default(T) is null)
         {
-            result = default(T);
+            result = default;
             return true;
         }
         if (parameter is T obj)
@@ -67,15 +67,15 @@ public class IRIHI_CommandBase<T>: ICommand
             result = obj;
             return true;
         }
-        result = default (T);
+        result = default;
         return false;
     }
     
     public void NotifyCanExecuteChanged()
     {
-        EventHandler canExecuteChanged = this.CanExecuteChanged;
+        EventHandler? canExecuteChanged = this.CanExecuteChanged;
         if (canExecuteChanged is null)
             return;
-        canExecuteChanged((object) this, EventArgs.Empty);
+        canExecuteChanged(this, EventArgs.Empty);
     }
 }

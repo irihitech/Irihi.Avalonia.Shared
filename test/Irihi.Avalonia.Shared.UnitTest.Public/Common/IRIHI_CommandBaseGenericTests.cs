@@ -1,6 +1,3 @@
-using System;
-using Xunit;
-
 namespace Irihi.Avalonia.Shared.Common.Tests;
 
 public class IRIHI_CommandBaseGenericTests
@@ -57,7 +54,7 @@ public class IRIHI_CommandBaseGenericTests
     {
         var command = new IRIHI_CommandBase<object>(_ => { });
         bool eventRaised = false;
-        command.CanExecuteChanged += (sender, e) => eventRaised = true;
+        command.CanExecuteChanged += (_, _) => eventRaised = true;
 
         command.NotifyCanExecuteChanged();
 
@@ -87,7 +84,7 @@ public class IRIHI_CommandBaseGenericTests
         var command = new IRIHI_CommandBase<object>(_ => { });
         bool eventRaised = false;
 
-        EventHandler handler = (sender, e) => eventRaised = true;
+        EventHandler handler = (_, _) => eventRaised = true;
         command.CanExecuteChanged += handler;
         command.CanExecuteChanged -= handler;
 

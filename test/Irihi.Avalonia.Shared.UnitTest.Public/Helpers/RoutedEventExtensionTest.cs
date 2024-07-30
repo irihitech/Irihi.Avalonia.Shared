@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Irihi.Avalonia.Shared.Helpers;
@@ -18,7 +17,7 @@ public class RoutedEventExtensionTest
             count++;
         }
         Button.ClickEvent.AddHandler(Handler, button);
-        button.RaiseEvent(new RoutedEventArgs(){ Source = button, RoutedEvent = Button.ClickEvent});
+        button.RaiseEvent(new RoutedEventArgs { Source = button, RoutedEvent = Button.ClickEvent});
         Assert.Equal(1, count);
     }
     
@@ -146,7 +145,6 @@ public class RoutedEventExtensionTest
         }
         var result = Button.ClickEvent.AddDisposableHandler(Handler, button, button2, button3);
         result.Dispose();
-        ;
         button.RaiseEvent(new RoutedEventArgs(){ Source = button, RoutedEvent = Button.ClickEvent});
         button2.RaiseEvent(new RoutedEventArgs(){ Source = button2, RoutedEvent = Button.ClickEvent});
         button3.RaiseEvent(new RoutedEventArgs(){ Source = button3, RoutedEvent = Button.ClickEvent});
@@ -304,7 +302,7 @@ public class RoutedEventExtensionTest
         {
             count++;
         }
-        var disposables = Button.ClickEvent.AddDisposableHandler(Handler, new Button[]{button, button2, button3}, RoutingStrategies.Bubble, true);
+        var disposables = Button.ClickEvent.AddDisposableHandler(Handler, new[]{button, button2, button3}, RoutingStrategies.Bubble, true);
         button.RaiseEvent(new RoutedEventArgs(){ Source = button, RoutedEvent = Button.ClickEvent});
         button2.RaiseEvent(new RoutedEventArgs(){ Source = button2, RoutedEvent = Button.ClickEvent});
         button3.RaiseEvent(new RoutedEventArgs(){ Source = button3, RoutedEvent = Button.ClickEvent});
@@ -410,14 +408,13 @@ public class RoutedEventExtensionTest
     public void EventHandler_AddHandler_Multi_Type_List_Success()
     {
         var button = new Button();
-        var panel = new Panel();
         var button2 = new Button();
         int count = 0;
         void Handler(object? sender, RoutedEventArgs args)
         {
             count++;
         }
-        Button.ClickEvent.AddDisposableHandler<RoutedEventArgs, Button>(Handler, RoutingStrategies.Bubble, false, button, button2);
+        Button.ClickEvent.AddDisposableHandler(Handler, RoutingStrategies.Bubble, false, button, button2);
         button.RaiseEvent(new RoutedEventArgs(){ Source = button, RoutedEvent = Button.ClickEvent});
         
         Assert.Equal(1, count);
