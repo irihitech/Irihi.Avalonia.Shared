@@ -72,4 +72,16 @@ public class IRIHI_ObservableBaseTests
 
         Assert.False(result);
     }
+    
+    [Fact]
+    public void OnPropertyChangingRaisesPropertyChangingEvent()
+    {
+        var observable = new TestObservable();
+        bool eventRaised = false;
+        observable.PropertyChanging += (sender, e) => eventRaised = true;
+        observable.TestProperty = "New Value";
+
+        Assert.True(eventRaised);
+    }
+
 }
