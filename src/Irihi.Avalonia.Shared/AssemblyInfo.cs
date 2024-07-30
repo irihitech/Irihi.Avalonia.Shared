@@ -1,5 +1,7 @@
 ﻿using Avalonia.Metadata;
+using System.Runtime.CompilerServices;
 
+[assembly:InternalsVisibleTo("Irihi.Avalonia.Shared.UnitTest")]
 [assembly:XmlnsPrefix("https://irihi.tech/shared", "iri")]
 [assembly:XmlnsDefinition("https://irihi.tech/shared", "Irihi.Avalonia.Shared.Common")]
 [assembly:XmlnsDefinition("https://irihi.tech/shared", "Irihi.Avalonia.Shared.Contracts")]
