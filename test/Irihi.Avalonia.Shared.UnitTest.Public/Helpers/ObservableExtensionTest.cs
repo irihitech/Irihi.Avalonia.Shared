@@ -12,7 +12,7 @@ public class ObservableExtensionTest
         bool called = false;
         var textBlock = new TextBlock();
         IObservable<string?> observable = textBlock.GetObservable(TextBlock.TextProperty);
-        IDisposable disposable = observable.Subscribe(i => called = true);
+        IDisposable disposable = observable.Subscribe(_ => called = true);
         textBlock.Text = "Hello, World!";
         disposable.Dispose();
         Assert.True(called);

@@ -9,6 +9,9 @@
     <Import_RootNamespace>Irihi.Avalonia.Shared.UnitTest.Public</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Common\IRIHI_CommandBaseGenericTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\IRIHI_CommandBaseTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\IRIHI_ObservableBaseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalUsings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AffectsPseudoClassTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AvaloniaPropertyExtensionTest.cs" />

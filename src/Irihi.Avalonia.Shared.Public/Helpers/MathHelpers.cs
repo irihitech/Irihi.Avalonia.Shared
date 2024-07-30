@@ -1,6 +1,3 @@
-using Avalonia.Controls.Platform;
-using Avalonia.Utilities;
-
 namespace Irihi.Avalonia.Shared.Helpers;
 
 public static class MathHelpers
