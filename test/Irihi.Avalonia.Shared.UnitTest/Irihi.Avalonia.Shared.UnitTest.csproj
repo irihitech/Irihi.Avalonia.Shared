@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Avalonia" Version="11.0.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
         <PackageReference Include="xunit" Version="2.4.2" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
@@ -23,6 +24,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\Irihi.Avalonia.Shared\Irihi.Avalonia.Shared.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <AvaloniaResource Include="..\Irihi.Avalonia.Shared.UnitTest.Public\Mocks\MockResourceConverter.axaml" />
     </ItemGroup>
 
     <Import Project="..\Irihi.Avalonia.Shared.UnitTest.Public\Irihi.Avalonia.Shared.UnitTest.Public.projitems" Label="Shared" />
