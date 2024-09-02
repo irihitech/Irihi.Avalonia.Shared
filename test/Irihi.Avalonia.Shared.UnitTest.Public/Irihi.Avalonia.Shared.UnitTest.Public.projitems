@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\IRIHI_CommandBaseGenericTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\IRIHI_CommandBaseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\IRIHI_ObservableBaseTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ResourceConverterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalUsings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AffectsPseudoClassTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AvaloniaPropertyExtensionTest.cs" />
@@ -21,7 +22,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableExtensionTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\PropertyPseudoClassHelperTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\RoutedEventExtensionTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Mocks\MockResourceConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Shapes\PureCircleTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Shapes\PureRingTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Mocks\MockResourceConverter.axaml" />
   </ItemGroup>
 </Project>

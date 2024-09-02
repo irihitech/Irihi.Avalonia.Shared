@@ -1,0 +1,9 @@
+<ResourceDictionary
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns="https://github.com/avaloniaui"
+    x:Class="Irihi.Avalonia.Shared.UnitTest.Mocks.MockResourceConverter">
+    <SolidColorBrush x:Key="Red" Color="Red"/>
+    <SolidColorBrush x:Key="Green" Color="Green"/>
+    <SolidColorBrush x:Key="Blue" Color="Blue"/>
+    <SolidColorBrush x:Key="Yellow" Color="Yellow"/>
+</ResourceDictionary>

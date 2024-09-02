@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IOuterContentControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IPopupInnerContent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IPopupOuterContent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ResourceConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AvaloniaPropertyExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BindingExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\LogicalHelpers.cs" />
