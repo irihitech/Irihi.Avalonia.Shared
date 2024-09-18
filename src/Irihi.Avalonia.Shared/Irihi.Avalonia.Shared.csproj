@@ -12,6 +12,9 @@
         <PackageIcon>irihi.png</PackageIcon>
         <PackageProjectUrl>https://www.irihi.tech</PackageProjectUrl>
         <RepositoryUrl>https://github.com/irihitech/Irihi.Avalonia.Shared</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/irihitech/Ursa.Avalonia</PackageProjectUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
 
     <ItemGroup>
