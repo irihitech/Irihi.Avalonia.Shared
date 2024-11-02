@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ResourceConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AvaloniaPropertyExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BindingExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ClassHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\LogicalHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\MathHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableExtension.cs" />
