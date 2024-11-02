@@ -5,8 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:iri="https://irihi.tech/shared"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:helpers="clr-namespace:Irihi.Avalonia.Shared.Helpers;assembly=Irihi.Avalonia.Shared"
     Title="Sample"
     mc:Ignorable="d">
+    <Window.Styles>
+        <Style Selector="Button.Alert">
+            <Setter Property="Background" Value="Red"/>
+        </Style>
+    </Window.Styles>
     <StackPanel HorizontalAlignment="Left">
         <CheckBox Margin="0 0 -7 0"></CheckBox>
         <Panel Width="100" Height="100">
@@ -18,5 +24,12 @@
             <Button>Hell World</Button>
             <iri:PureRing Diameter="50" InnerDiameter="25" Background="Green"></iri:PureRing>
         </Panel>
+        <Button Content="Alert">
+            <Button.Styles>
+                <Style Selector="Button">
+                    <Setter Property="helpers:ClassHelper.Classes" Value="Alert"/>
+                </Style>
+            </Button.Styles>
+        </Button>
     </StackPanel>
 </Window>
