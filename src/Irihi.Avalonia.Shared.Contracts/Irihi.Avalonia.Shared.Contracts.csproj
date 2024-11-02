@@ -7,7 +7,7 @@
         <LangVersion>latest</LangVersion>
         <Version>0.1.9</Version>
         <Authors>IRIHI Technology Co., Ltd.</Authors>
-        <PackageId>Irihi.Avalonia.Shared</PackageId>
+        <PackageId>Irihi.Avalonia.Shared.Contracts</PackageId>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageIcon>irihi.png</PackageIcon>
         <PackageProjectUrl>https://www.irihi.tech</PackageProjectUrl>
