@@ -15,7 +15,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\PartNames.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\PseudoClassName.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IClearControl.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Contracts\IDialogContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IInnerContentControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IOuterContentControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IPopupInnerContent.cs" />

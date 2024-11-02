@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+        <Version>0.1.9</Version>
+        <Authors>IRIHI Technology Co., Ltd.</Authors>
+        <PackageId>Irihi.Avalonia.Shared</PackageId>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageIcon>irihi.png</PackageIcon>
+        <PackageProjectUrl>https://www.irihi.tech</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/irihitech/Irihi.Avalonia.Shared</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/irihitech/Ursa.Avalonia</PackageProjectUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+
+</Project>
