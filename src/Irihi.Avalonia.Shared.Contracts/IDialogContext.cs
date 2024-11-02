@@ -1,4 +1,6 @@
-﻿namespace Irihi.Avalonia.Shared.Contracts;
+using System;
+
+namespace Irihi.Avalonia.Shared.Contracts;
 
 public interface IDialogContext
 {
