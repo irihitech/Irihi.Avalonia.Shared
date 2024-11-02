@@ -22,6 +22,8 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal ./src
     - name: Pack
-      run: dotnet pack ./src/Irihi.Avalonia.Shared -o ./nugets
+      run: | 
+          dotnet pack ./src/Irihi.Avalonia.Shared -o ./nugets
+          dotnet pack ./src/Irihi.Avalonia.Shared.Contracts -o ./nugets
     - name: Publish NuGet package
       run: dotnet nuget push "./nugets/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
