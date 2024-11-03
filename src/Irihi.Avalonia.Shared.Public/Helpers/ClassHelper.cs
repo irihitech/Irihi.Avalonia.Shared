@@ -47,10 +47,11 @@ public class ClassHelper
 
     private static void OnClassesChanged(StyledElement sender, AvaloniaPropertyChangedEventArgs value)
     {
-        var classes = value.GetNewValue<string?>();
-        if (classes is null) return;
+        var @class = value.GetNewValue<string?>();
+        if (@class is null) return;
         sender.Classes.Clear();
-        sender.Classes.Add(classes);
+        var classes = @class.Split([' '], StringSplitOptions.RemoveEmptyEntries);
+        sender.Classes.AddRange(classes);
     }
 
     public static void SetClassSource(StyledElement obj, StyledElement value)
