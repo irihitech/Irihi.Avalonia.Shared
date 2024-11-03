@@ -77,6 +77,15 @@ public class ClassHelperTests
     }
     
     [Fact]
+    public void OnClassesChanged_Add_Split_Classes()
+    {
+        var control = new Button();
+        ClassHelper.SetClasses(control, "class1 class2");
+        Assert.Contains("class1", control.Classes);
+        Assert.Contains("class2", control.Classes);
+    }
+    
+    [Fact]
     public void ClassesProperty_Should_Not_Throw_Exception_When_Null()
     {
         var control = new Button();
