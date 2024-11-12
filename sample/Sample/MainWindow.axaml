@@ -6,14 +6,31 @@
     xmlns:iri="https://irihi.tech/shared"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="clr-namespace:Irihi.Avalonia.Shared.Helpers;assembly=Irihi.Avalonia.Shared"
+    xmlns:converters="clr-namespace:Irihi.Avalonia.Shared.Converters;assembly=Irihi.Avalonia.Shared"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+    xmlns:sample="clr-namespace:Sample"
+    x:DataType="sample:MainViewModel"
     Title="Sample"
     mc:Ignorable="d">
+    <Window.Resources>
+        <ResourceDictionary>
+            <converters:DataTypeTemplateSelector x:Key="Converter">
+                <DataTemplate x:Key="{x:Type x:String}" DataType="x:String">
+                    <TextBox Text="{Binding}" Width="200"/>
+                </DataTemplate>
+                <DataTemplate x:Key="{x:Type system:DateTime}" DataType="system:DateTime">
+                    <CalendarDatePicker SelectedDate="{Binding}" Width="200"/>
+                </DataTemplate>
+            </converters:DataTypeTemplateSelector>
+        </ResourceDictionary>
+    </Window.Resources>
     <Window.Styles>
         <Style Selector="Button.Alert">
             <Setter Property="Background" Value="Red"/>
         </Style>
     </Window.Styles>
     <StackPanel HorizontalAlignment="Left">
+        <ItemsControl ItemsSource="{Binding Items}" ItemTemplate="{StaticResource Converter}"/>
         <CheckBox Margin="0 0 -7 0"></CheckBox>
         <Panel Width="100" Height="100">
             <iri:PureRectangle Background="Yellow"></iri:PureRectangle>
