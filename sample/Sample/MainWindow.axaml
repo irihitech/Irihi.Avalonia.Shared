@@ -13,7 +13,8 @@
             <Setter Property="Background" Value="Red"/>
         </Style>
     </Window.Styles>
-    <StackPanel HorizontalAlignment="Left">
+    <StackPanel HorizontalAlignment="Left" Margin="20">
+        <iri:IrihiLogo Fill="{DynamicResource SemiBlue9}" Width="72" Corner="0" />
         <CheckBox Margin="0 0 -7 0"></CheckBox>
         <Panel Width="100" Height="100">
             <iri:PureRectangle Background="Yellow"></iri:PureRectangle>

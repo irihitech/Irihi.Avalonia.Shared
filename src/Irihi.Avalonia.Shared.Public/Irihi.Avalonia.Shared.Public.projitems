@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\RoutedEventExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReadonlyDisposableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\ResultDisposable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Shapes\IrihiLogo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Shapes\PureCircle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Shapes\PureRectangle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Shapes\PureRing.cs" />
