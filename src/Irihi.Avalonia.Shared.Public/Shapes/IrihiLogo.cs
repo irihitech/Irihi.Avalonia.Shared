@@ -36,6 +36,11 @@ public class IrihiLogo: Control
         return new Size(availableSize.Width, height);
     }
 
+    protected override Size ArrangeOverride(Size finalSize)
+    {
+        return this.DesiredSize;
+    }
+
     public override void Render(DrawingContext context)
     {
         base.Render(context);
