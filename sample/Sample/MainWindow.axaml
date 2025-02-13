@@ -3,32 +3,51 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:Irihi.Avalonia.Shared.Helpers;assembly=Irihi.Avalonia.Shared"
     xmlns:iri="https://irihi.tech/shared"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:helpers="clr-namespace:Irihi.Avalonia.Shared.Helpers;assembly=Irihi.Avalonia.Shared"
     Title="Sample"
     mc:Ignorable="d">
     <Window.Styles>
         <Style Selector="Button.Alert">
-            <Setter Property="Background" Value="Red"/>
+            <Setter Property="Background" Value="Red" />
         </Style>
     </Window.Styles>
-    <StackPanel HorizontalAlignment="Left" Margin="20">
-        <iri:IrihiLogo Fill="{DynamicResource SemiBlue9}" Width="72" Corner="0" />
-        <CheckBox Margin="0 0 -7 0"></CheckBox>
+    <StackPanel Margin="20" HorizontalAlignment="Left">
+        <Slider
+            Name="width"
+            Width="300"
+            Maximum="300"
+            Value="300" />
+        <Slider
+            Name="corner"
+            Width="300"
+            Value="0" />
+        <iri:IrihiLogo
+            Width="{Binding #width.Value}"
+            Corner="{Binding #corner.Value}"
+            Fill="{DynamicResource SemiBlue5}" />
+        <CheckBox Margin="0,0,-7,0" />
         <Panel Width="100" Height="100">
-            <iri:PureRectangle Background="Yellow"></iri:PureRectangle>
+            <iri:PureRectangle Background="Yellow" />
         </Panel>
-        <iri:PureRectangle Width="30" Height="40" Background="Red" HorizontalAlignment="Left"/>
-        <iri:PureCircle Diameter="50" Background="Blue"></iri:PureCircle>
+        <iri:PureRectangle
+            Width="30"
+            Height="40"
+            HorizontalAlignment="Left"
+            Background="Red" />
+        <iri:PureCircle Background="Blue" Diameter="50" />
         <Panel>
             <Button>Hell World</Button>
-            <iri:PureRing Diameter="50" InnerDiameter="25" Background="Green"></iri:PureRing>
+            <iri:PureRing
+                Background="Green"
+                Diameter="50"
+                InnerDiameter="25" />
         </Panel>
         <Button Content="Alert">
             <Button.Styles>
                 <Style Selector="Button">
-                    <Setter Property="helpers:ClassHelper.Classes" Value="Alert"/>
+                    <Setter Property="helpers:ClassHelper.Classes" Value="Alert" />
                 </Style>
             </Button.Styles>
         </Button>
