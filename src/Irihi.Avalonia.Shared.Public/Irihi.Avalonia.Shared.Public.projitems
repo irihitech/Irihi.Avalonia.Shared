@@ -27,6 +27,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\MathHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\RoutedEventExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MarkupExtensions\IMarkupExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MarkupExtensions\ThicknessBridgeExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MarkupExtensions\CornerRadiusBridgeExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReadonlyDisposableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\ResultDisposable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Shapes\IrihiLogo.cs" />
