@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\IRIHI_CommandBaseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\IRIHI_ObservableBaseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ResourceConverterTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessConverterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalUsings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AffectsPseudoClassTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AvaloniaPropertyExtensionTest.cs" />
