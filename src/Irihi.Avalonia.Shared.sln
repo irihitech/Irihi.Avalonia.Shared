@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Irihi.Avalonia.Shared.Contr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Irihi.Avalonia.Shared.HeadlessTest", "..\test\Irihi.Avalonia.Shared.HeadlessTest\Irihi.Avalonia.Shared.HeadlessTest.csproj", "{679BBDB6-78F5-4D97-8E65-DCBC20A8BC98}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DFEB7998-F5CE-4914-B954-5EA8AD26C002}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,5 +60,10 @@ Global
 		Irihi.Avalonia.Shared.Public\Irihi.Avalonia.Shared.Public.projitems*{2c350a8c-4253-45ce-b565-6f4275fc11cd}*SharedItemsImports = 5
 		..\test\Irihi.Avalonia.Shared.UnitTest.Public\Irihi.Avalonia.Shared.UnitTest.Public.projitems*{5ad4a73b-4b85-4c56-bab3-a25d526f0b07}*SharedItemsImports = 5
 		Irihi.Avalonia.Shared.Public\Irihi.Avalonia.Shared.Public.projitems*{f7a8869a-c381-4445-bc80-f87739d6a496}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5AD4A73B-4B85-4C56-BAB3-A25D526F0B07} = {DFEB7998-F5CE-4914-B954-5EA8AD26C002}
+		{679BBDB6-78F5-4D97-8E65-DCBC20A8BC98} = {DFEB7998-F5CE-4914-B954-5EA8AD26C002}
+		{222449F9-96D5-409E-9627-AA1DE6219B26} = {DFEB7998-F5CE-4914-B954-5EA8AD26C002}
 	EndGlobalSection
 EndGlobal
