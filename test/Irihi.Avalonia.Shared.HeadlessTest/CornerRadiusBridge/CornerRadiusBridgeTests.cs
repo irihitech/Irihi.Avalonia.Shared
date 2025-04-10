@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Irihi.Avalonia.Shared.HeadlessTest;
 
-public class CornerBridgeTests
+public class CornerRadiusBridgeTests
 {
     [AvaloniaFact]
     public void CornerRadiusBridge_WithPositionalParameters_ShouldCreateCorrectRadius()
