@@ -18,12 +18,6 @@ public class CornerRadiusBridgeExtension : IMarkupExtension<CornerRadius>
         TopLeft = TopRight = BottomLeft = BottomRight = uniformRadius;
     }
 
-    public CornerRadiusBridgeExtension(double top, double bottom)
-    {
-        TopLeft = TopRight = top;
-        BottomLeft = BottomRight = bottom;
-    }
-
     public CornerRadiusBridgeExtension(double topLeft, double topRight, double bottomRight, double bottomLeft)
     {
         TopLeft = topLeft;
