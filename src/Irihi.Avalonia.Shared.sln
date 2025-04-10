@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFiles", "SolutionFi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Irihi.Avalonia.Shared.Contracts", "Irihi.Avalonia.Shared.Contracts\Irihi.Avalonia.Shared.Contracts.csproj", "{5A97CB01-D0D1-4701-ABE8-2F47E54B1485}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Irihi.Avalonia.Shared.HeadlessTest", "..\test\Irihi.Avalonia.Shared.HeadlessTest\Irihi.Avalonia.Shared.HeadlessTest.csproj", "{679BBDB6-78F5-4D97-8E65-DCBC20A8BC98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{5A97CB01-D0D1-4701-ABE8-2F47E54B1485}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A97CB01-D0D1-4701-ABE8-2F47E54B1485}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A97CB01-D0D1-4701-ABE8-2F47E54B1485}.Release|Any CPU.Build.0 = Release|Any CPU
+		{679BBDB6-78F5-4D97-8E65-DCBC20A8BC98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{679BBDB6-78F5-4D97-8E65-DCBC20A8BC98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{679BBDB6-78F5-4D97-8E65-DCBC20A8BC98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{679BBDB6-78F5-4D97-8E65-DCBC20A8BC98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
