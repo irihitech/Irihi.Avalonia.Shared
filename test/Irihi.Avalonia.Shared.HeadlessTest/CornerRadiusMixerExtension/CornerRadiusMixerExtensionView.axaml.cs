@@ -2,9 +2,9 @@
 
 namespace Irihi.Avalonia.Shared.HeadlessTest;
 
-public partial class ThicknessBridgeView : UserControl
+public partial class CornerRadiusMixerExtensionView : UserControl
 {
-    public ThicknessBridgeView()
+    public CornerRadiusMixerExtensionView()
     {
         InitializeComponent();
     }

@@ -5,12 +5,12 @@ using Xunit;
 
 namespace Irihi.Avalonia.Shared.HeadlessTest;
 
-public class ThicknessConverterTests
+public class ThicknessMixerConverterTests
 {
     [AvaloniaFact]
     public void ThicknessConverter_WithAll_ShouldKeepOriginalThickness()
     {
-        var view = new ThicknessConverterView();
+        var view = new ThicknessMixerConverterView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -24,7 +24,7 @@ public class ThicknessConverterTests
         double l, double t, double r, double b,
         double el, double et, double er, double eb)
     {
-        var view = new ThicknessConverterView
+        var view = new ThicknessMixerConverterView
         {
             button2 = { Padding = new Thickness(l, t, r, b) }
         };
@@ -37,7 +37,7 @@ public class ThicknessConverterTests
     [AvaloniaFact]
     public void ThicknessConverter_WithHorizontal_ShouldKeepLeftRight()
     {
-        var view = new ThicknessConverterView();
+        var view = new ThicknessMixerConverterView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -47,7 +47,7 @@ public class ThicknessConverterTests
     [AvaloniaFact]
     public void ThicknessConverter_WithTopLeft_ShouldKeepTopLeft()
     {
-        var view = new ThicknessConverterView();
+        var view = new ThicknessMixerConverterView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -59,7 +59,7 @@ public class ThicknessConverterTests
     [InlineData(100)]
     public void ThicknessConverter_WithNone_ShouldClearAllEdges(double padding)
     {
-        var view = new ThicknessConverterView
+        var view = new ThicknessMixerConverterView
         {
             button5 = { Padding = new Thickness(padding) }
         };
@@ -72,7 +72,7 @@ public class ThicknessConverterTests
     [AvaloniaFact]
     public void ThicknessConverter_WithBottom_ShouldKeepOnlyBottom()
     {
-        var view = new ThicknessConverterView();
+        var view = new ThicknessMixerConverterView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -82,7 +82,7 @@ public class ThicknessConverterTests
     [AvaloniaFact]
     public void ThicknessConverter_WithVerticalAndBottomLeft_ShouldCombineFlags()
     {
-        var view = new ThicknessConverterView();
+        var view = new ThicknessMixerConverterView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -92,7 +92,7 @@ public class ThicknessConverterTests
     [AvaloniaFact]
     public void ThicknessConverter_ShouldReactToRuntimeChanges()
     {
-        var view = new ThicknessConverterView();
+        var view = new ThicknessMixerConverterView();
         var window = new Window { Content = view };
         window.Show();
 

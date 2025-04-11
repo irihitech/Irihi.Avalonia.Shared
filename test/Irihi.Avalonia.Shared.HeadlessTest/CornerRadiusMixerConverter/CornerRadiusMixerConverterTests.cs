@@ -5,12 +5,12 @@ using Xunit;
 
 namespace Irihi.Avalonia.Shared.HeadlessTest;
 
-public class CornerRadiusConverterTests
+public class CornerRadiusMixerConverterTests
 {
     [AvaloniaFact]
     public void CornerRadiusConverter_Default_ShouldApplyTopLeftBottomRight()
     {
-        var view = new CornerRadiusConverterView();
+        var view = new CornerRadiusMixerConverterView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -24,7 +24,7 @@ public class CornerRadiusConverterTests
         double tl, double tr, double br, double bl,
         double etl, double etr, double ebr, double ebl)
     {
-        var view = new CornerRadiusConverterView
+        var view = new CornerRadiusMixerConverterView
         {
             border = { CornerRadius = new CornerRadius(tl, tr, br, bl) }
         };
@@ -37,7 +37,7 @@ public class CornerRadiusConverterTests
     [AvaloniaFact]
     public void CornerRadiusConverter_WithTopLeftBottomRight_ShouldKeepDiagonalCorners()
     {
-        var view = new CornerRadiusConverterView();
+        var view = new CornerRadiusMixerConverterView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -47,7 +47,7 @@ public class CornerRadiusConverterTests
     [AvaloniaFact]
     public void CornerRadiusConverter_WithTop_ShouldKeepTopCorners()
     {
-        var view = new CornerRadiusConverterView();
+        var view = new CornerRadiusMixerConverterView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -59,7 +59,7 @@ public class CornerRadiusConverterTests
     [InlineData(100)]
     public void CornerRadiusConverter_WithNone_ShouldClearAllCorners(double value)
     {
-        var view = new CornerRadiusConverterView
+        var view = new CornerRadiusMixerConverterView
         {
             border = { CornerRadius = new CornerRadius(value) }
         };
@@ -72,7 +72,7 @@ public class CornerRadiusConverterTests
     [AvaloniaFact]
     public void CornerRadiusConverter_WithBottomLeft_ShouldIsolateSingleCorner()
     {
-        var view = new CornerRadiusConverterView();
+        var view = new CornerRadiusMixerConverterView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -82,7 +82,7 @@ public class CornerRadiusConverterTests
     [AvaloniaFact]
     public void CornerRadiusConverter_WithTopAndLeft_ShouldCombineFlags()
     {
-        var view = new CornerRadiusConverterView();
+        var view = new CornerRadiusMixerConverterView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -92,7 +92,7 @@ public class CornerRadiusConverterTests
     [AvaloniaFact]
     public void CornerRadiusConverter_ShouldReactToRuntimeChanges()
     {
-        var view = new CornerRadiusConverterView();
+        var view = new CornerRadiusMixerConverterView();
         var window = new Window { Content = view };
         window.Show();
 

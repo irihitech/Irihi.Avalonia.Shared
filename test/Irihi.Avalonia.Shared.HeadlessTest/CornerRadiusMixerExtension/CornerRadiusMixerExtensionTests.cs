@@ -5,12 +5,12 @@ using Xunit;
 
 namespace Irihi.Avalonia.Shared.HeadlessTest;
 
-public class CornerRadiusBridgeTests
+public class CornerRadiusMixerExtensionTests
 {
     [AvaloniaFact]
     public void CornerRadiusBridge_WithPositionalParameters_ShouldCreateCorrectRadius()
     {
-        var view = new CornerRadiusBridgeView();
+        var view = new CornerRadiusMixerExtensionView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -22,7 +22,7 @@ public class CornerRadiusBridgeTests
     [AvaloniaFact]
     public void CornerRadiusBridge_WithResourceBinding_ShouldResolveCorrectly()
     {
-        var view = new CornerRadiusBridgeView();
+        var view = new CornerRadiusMixerExtensionView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -34,7 +34,7 @@ public class CornerRadiusBridgeTests
     [AvaloniaFact]
     public void CornerRadiusBridge_WithNamedParameters_ShouldOverrideCorrectValues()
     {
-        var view = new CornerRadiusBridgeView();
+        var view = new CornerRadiusMixerExtensionView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -45,7 +45,7 @@ public class CornerRadiusBridgeTests
     [AvaloniaFact]
     public void CornerRadiusBridge_WithMixedParameters_ShouldPrioritizeCorrectly()
     {
-        var view = new CornerRadiusBridgeView();
+        var view = new CornerRadiusMixerExtensionView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -56,7 +56,7 @@ public class CornerRadiusBridgeTests
     [AvaloniaFact]
     public void CornerRadiusBridge_WithPropertyElementSyntax_ShouldWorkSameAsAttribute()
     {
-        var view = new CornerRadiusBridgeView();
+        var view = new CornerRadiusMixerExtensionView();
         var window = new Window { Content = view };
         window.Show();
 

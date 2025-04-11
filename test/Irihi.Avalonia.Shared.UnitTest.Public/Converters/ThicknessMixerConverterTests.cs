@@ -4,9 +4,9 @@ using Irihi.Avalonia.Shared.Converters;
 
 namespace Irihi.Avalonia.Shared.UnitTest.Converters;
 
-public class ThicknessConverterTests
+public class ThicknessMixerConverterTests
 {
-    private readonly ThicknessConverter _converter = new();
+    private readonly ThicknessMixerConverter _converter = new();
 
     public static TheoryData<ThicknessPosition, Thickness, Thickness> PositionTestCases => new()
     {
@@ -55,7 +55,7 @@ public class ThicknessConverterTests
         Thickness expected)
     {
         // Arrange
-        var converter = new ThicknessConverter(position);
+        var converter = new ThicknessMixerConverter(position);
 
         // Act
         var result = converter.Convert(input, typeof(Thickness), null, CultureInfo.InvariantCulture);

@@ -5,12 +5,12 @@ using Xunit;
 
 namespace Irihi.Avalonia.Shared.HeadlessTest;
 
-public class ThicknessBridgeTests
+public class ThicknessMixerExtensionTests
 {
     [AvaloniaFact]
     public void ThicknessBridge_WithPositionalParameters_ShouldCreateCorrectThickness()
     {
-        var view = new ThicknessBridgeView();
+        var view = new ThicknessMixerExtensionView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -23,7 +23,7 @@ public class ThicknessBridgeTests
     [AvaloniaFact]
     public void ThicknessBridge_WithResourceBinding_ShouldResolveCorrectly()
     {
-        var view = new ThicknessBridgeView();
+        var view = new ThicknessMixerExtensionView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -36,7 +36,7 @@ public class ThicknessBridgeTests
     [AvaloniaFact]
     public void ThicknessBridge_WithNamedParameters_ShouldOverrideCorrectValues()
     {
-        var view = new ThicknessBridgeView();
+        var view = new ThicknessMixerExtensionView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -48,7 +48,7 @@ public class ThicknessBridgeTests
     [AvaloniaFact]
     public void ThicknessBridge_WithMixedParameters_ShouldPrioritizeCorrectly()
     {
-        var view = new ThicknessBridgeView();
+        var view = new ThicknessMixerExtensionView();
         var window = new Window { Content = view };
         window.Show();
 
@@ -60,7 +60,7 @@ public class ThicknessBridgeTests
     [AvaloniaFact]
     public void ThicknessBridge_WithPropertyElementSyntax_ShouldWorkSameAsAttribute()
     {
-        var view = new ThicknessBridgeView();
+        var view = new ThicknessMixerExtensionView();
         var window = new Window { Content = view };
         window.Show();
 

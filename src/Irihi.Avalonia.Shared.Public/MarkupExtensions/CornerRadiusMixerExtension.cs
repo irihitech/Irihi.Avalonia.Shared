@@ -2,23 +2,23 @@
 
 namespace Irihi.Avalonia.Shared.MarkupExtensions;
 
-public class CornerRadiusBridgeExtension : IMarkupExtension<CornerRadius>
+public class CornerRadiusMixerExtension : IMarkupExtension<CornerRadius>
 {
     public double TopLeft { get; set; }
     public double TopRight { get; set; }
     public double BottomRight { get; set; }
     public double BottomLeft { get; set; }
 
-    public CornerRadiusBridgeExtension()
+    public CornerRadiusMixerExtension()
     {
     }
 
-    public CornerRadiusBridgeExtension(double uniformRadius)
+    public CornerRadiusMixerExtension(double uniformRadius)
     {
         TopLeft = TopRight = BottomLeft = BottomRight = uniformRadius;
     }
 
-    public CornerRadiusBridgeExtension(double topLeft, double topRight, double bottomRight, double bottomLeft)
+    public CornerRadiusMixerExtension(double topLeft, double topRight, double bottomRight, double bottomLeft)
     {
         TopLeft = topLeft;
         TopRight = topRight;

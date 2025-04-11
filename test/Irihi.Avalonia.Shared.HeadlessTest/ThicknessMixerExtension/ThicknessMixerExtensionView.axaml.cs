@@ -2,9 +2,9 @@
 
 namespace Irihi.Avalonia.Shared.HeadlessTest;
 
-public partial class ThicknessConverterView : UserControl
+public partial class ThicknessMixerExtensionView : UserControl
 {
-    public ThicknessConverterView()
+    public ThicknessMixerExtensionView()
     {
         InitializeComponent();
     }

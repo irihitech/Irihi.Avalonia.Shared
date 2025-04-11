@@ -2,9 +2,9 @@
 
 namespace Irihi.Avalonia.Shared.HeadlessTest;
 
-public partial class CornerRadiusConverterView : UserControl
+public partial class CornerRadiusMixerConverterView : UserControl
 {
-    public CornerRadiusConverterView()
+    public CornerRadiusMixerConverterView()
     {
         InitializeComponent();
     }

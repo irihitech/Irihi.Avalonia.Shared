@@ -5,15 +5,15 @@ using Irihi.Avalonia.Shared.MarkupExtensions;
 
 namespace Irihi.Avalonia.Shared.Converters;
 
-public class CornerRadiusConverter : IMarkupExtension<IValueConverter>, IValueConverter
+public class CornerRadiusMixerConverter : IMarkupExtension<IValueConverter>, IValueConverter
 {
     private readonly CornerRadiusPosition _position = CornerRadiusPosition.All;
 
-    public CornerRadiusConverter()
+    public CornerRadiusMixerConverter()
     {
     }
 
-    public CornerRadiusConverter(CornerRadiusPosition position)
+    public CornerRadiusMixerConverter(CornerRadiusPosition position)
     {
         _position = position;
     }

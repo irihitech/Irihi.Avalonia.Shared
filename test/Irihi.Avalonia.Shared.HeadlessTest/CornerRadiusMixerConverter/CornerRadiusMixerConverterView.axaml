@@ -1,0 +1,31 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:iri="https://irihi.tech/shared"
+             x:Class="Irihi.Avalonia.Shared.HeadlessTest.CornerRadiusMixerConverterView">
+    <StackPanel>
+        <Border
+            Name="border"
+            CornerRadius="10" />
+        <Button
+            Name="button1"
+            CornerRadius="{Binding #border.CornerRadius,Converter={iri:CornerRadiusMixerConverter}}" />
+        <Button
+            Name="button2"
+            CornerRadius="{Binding #border.CornerRadius,Converter={iri:CornerRadiusMixerConverter 'Bottom,TopRight'}}" />
+        <Button
+            Name="button3"
+            CornerRadius="{Binding #border.CornerRadius,Converter={iri:CornerRadiusMixerConverter 'TopLeft,BottomRight'}}" />
+        <Button
+            Name="button4"
+            CornerRadius="{Binding #border.CornerRadius,Converter={iri:CornerRadiusMixerConverter Top}}" />
+        <Button
+            Name="button5"
+            CornerRadius="{Binding #border.CornerRadius,Converter={iri:CornerRadiusMixerConverter None}}" />
+        <Button
+            Name="button6"
+            CornerRadius="{Binding #border.CornerRadius,Converter={iri:CornerRadiusMixerConverter BottomLeft}}" />
+        <Button
+            Name="button7"
+            CornerRadius="{Binding #border.CornerRadius,Converter={iri:CornerRadiusMixerConverter 'Top,Left'}}" />
+    </StackPanel>
+</UserControl>

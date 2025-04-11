@@ -5,15 +5,15 @@ using Irihi.Avalonia.Shared.MarkupExtensions;
 
 namespace Irihi.Avalonia.Shared.Converters;
 
-public class ThicknessConverter : IMarkupExtension<IValueConverter>, IValueConverter
+public class ThicknessMixerConverter : IMarkupExtension<IValueConverter>, IValueConverter
 {
     private readonly ThicknessPosition _position = ThicknessPosition.All;
 
-    public ThicknessConverter()
+    public ThicknessMixerConverter()
     {
     }
 
-    public ThicknessConverter(ThicknessPosition position)
+    public ThicknessMixerConverter(ThicknessPosition position)
     {
         _position = position;
     }

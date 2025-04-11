@@ -4,9 +4,9 @@ using Irihi.Avalonia.Shared.Converters;
 
 namespace Irihi.Avalonia.Shared.UnitTest.Converters;
 
-public class CornerRadiusConverterTests
+public class CornerRadiusMixerConverterTests
 {
-    private readonly CornerRadiusConverter _converter = new();
+    private readonly CornerRadiusMixerConverter _converter = new();
 
     public static TheoryData<CornerRadiusPosition, CornerRadius, CornerRadius> PositionTestCases => new()
     {
@@ -55,7 +55,7 @@ public class CornerRadiusConverterTests
         CornerRadius expected)
     {
         // Arrange
-        var converter = new CornerRadiusConverter(position);
+        var converter = new CornerRadiusMixerConverter(position);
 
         // Act
         var result = converter.Convert(input, typeof(CornerRadius), null, CultureInfo.InvariantCulture);

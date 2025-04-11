@@ -19,9 +19,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IOuterContentControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IPopupInnerContent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IPopupOuterContent.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\CornerRadiusConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\CornerRadiusMixerConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ResourceConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessMixerConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AvaloniaPropertyExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BindingExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ClassHelper.cs" />
@@ -30,8 +30,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\RoutedEventExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MarkupExtensions\IMarkupExtension.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MarkupExtensions\ThicknessBridgeExtension.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MarkupExtensions\CornerRadiusBridgeExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MarkupExtensions\ThicknessMixerExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MarkupExtensions\CornerRadiusMixerExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReadonlyDisposableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\ResultDisposable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Shapes\IrihiLogo.cs" />
