@@ -1,0 +1,39 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:iri="https://irihi.tech/shared"
+             x:Class="Irihi.Avalonia.Shared.HeadlessTest.CornerRadiusMixerExtensionView">
+    <UserControl.Resources>
+        <x:Double x:Key="Spacing1">10</x:Double>
+        <x:Double x:Key="Spacing2">20</x:Double>
+        <x:Double x:Key="Spacing3">30</x:Double>
+        <x:Double x:Key="Spacing4">40</x:Double>
+        <x:Double x:Key="Spacing5">50</x:Double>
+    </UserControl.Resources>
+    <StackPanel>
+        <Border Name="border1" CornerRadius="{iri:CornerRadiusMixer 0,0,10,0}" />
+        <Border Name="border2" CornerRadius="{iri:CornerRadiusMixer 10}" />
+        <Border Name="border3" CornerRadius="{iri:CornerRadiusMixer 10,20,30,40}" />
+
+        <Border Name="border4" CornerRadius="{iri:CornerRadiusMixer BottomRight={StaticResource Spacing1}}" />
+        <Border Name="border5"
+                CornerRadius="{iri:CornerRadiusMixer
+                TopLeft={StaticResource Spacing1},
+                TopRight={StaticResource Spacing1},
+                BottomRight={StaticResource Spacing1},
+                BottomLeft={StaticResource Spacing1}}" />
+        <Border Name="border6">
+            <Border.CornerRadius>
+                <iri:CornerRadiusMixer
+                    TopLeft="{StaticResource Spacing1}"
+                    TopRight="{StaticResource Spacing2}"
+                    BottomRight="{StaticResource Spacing3}"
+                    BottomLeft="{StaticResource Spacing4}" />
+            </Border.CornerRadius>
+        </Border>
+
+        <Border Name="border7" CornerRadius="{iri:CornerRadiusMixer 10, BottomRight=50}" />
+        <Border Name="border8" CornerRadius="{iri:CornerRadiusMixer 10,20,30,40, BottomRight=50}" />
+        <Border Name="border9" CornerRadius="{iri:CornerRadiusMixer 10, BottomRight={StaticResource Spacing5}}" />
+        <Border Name="border10" CornerRadius="{iri:CornerRadiusMixer 10,20,30,40, BottomRight={StaticResource Spacing5}}" />
+    </StackPanel>
+</UserControl>
