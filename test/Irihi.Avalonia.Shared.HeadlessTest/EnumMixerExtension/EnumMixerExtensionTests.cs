@@ -16,7 +16,7 @@ public class EnumMixerExtensionTests
 
         Assert.Equal(CustomEnum.Option2, view.comboBox.SelectedItem);
         Assert.Equal(HorizontalAlignment.Center, view.listBox.SelectedItem);
-        Assert.Equal([], view.listBox2.Items);
+        Assert.Empty(view.listBox2.Items);
     }
 }
 
