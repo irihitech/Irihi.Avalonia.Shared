@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\MathHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\RoutedEventExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MarkupExtensions\EnumMixerExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MarkupExtensions\IMarkupExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MarkupExtensions\ThicknessMixerExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MarkupExtensions\CornerRadiusMixerExtension.cs" />
