@@ -1,11 +1,9 @@
 ﻿using System.Globalization;
 using Avalonia;
-using Avalonia.Data.Converters;
-using Irihi.Avalonia.Shared.MarkupExtensions;
 
 namespace Irihi.Avalonia.Shared.Converters;
 
-public class ThicknessMixerConverter : IMarkupExtension<IValueConverter>, IValueConverter
+public class ThicknessMixerConverter : MarkupValueConverter
 {
     private readonly ThicknessPosition _position = ThicknessPosition.All;
 
@@ -18,7 +16,7 @@ public class ThicknessMixerConverter : IMarkupExtension<IValueConverter>, IValue
         _position = position;
     }
 
-    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public override object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is Thickness t)
         {
@@ -30,16 +28,6 @@ public class ThicknessMixerConverter : IMarkupExtension<IValueConverter>, IValue
         }
 
         return AvaloniaProperty.UnsetValue;
-    }
-
-    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IValueConverter ProvideValue(IServiceProvider serviceProvider)
-    {
-        return this;
     }
 }
 
