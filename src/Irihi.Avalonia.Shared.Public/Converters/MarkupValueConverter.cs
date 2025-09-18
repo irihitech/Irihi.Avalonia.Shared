@@ -13,12 +13,12 @@ public abstract class MarkupValueConverter : IMarkupExtension<IValueConverter>, 
         throw new NotImplementedException();
     }
 
-    public IValueConverter ProvideValue(IServiceProvider _) => this;
+    public virtual IValueConverter ProvideValue(IServiceProvider _) => this;
 }
 
 public abstract class MarkupMultiValueConverter : IMarkupExtension<IMultiValueConverter>, IMultiValueConverter
 {
     public abstract object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture);
 
-    public IMultiValueConverter ProvideValue(IServiceProvider _) => this;
+    public virtual IMultiValueConverter ProvideValue(IServiceProvider _) => this;
 }
