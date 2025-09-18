@@ -1,0 +1,19 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:iri="https://irihi.tech/shared"
+             xmlns:headlessTest="clr-namespace:Irihi.Avalonia.Shared.HeadlessTest"
+             x:Class="Irihi.Avalonia.Shared.HeadlessTest.EnumMixerExtensionView">
+    <StackPanel>
+        <ComboBox
+            Name="comboBox"
+            ItemsSource="{iri:EnumMixer headlessTest:CustomEnum}"
+            SelectedItem="{x:Static headlessTest:CustomEnum.Option2}" />
+        <ListBox
+            Name="listBox"
+            ItemsSource="{iri:EnumMixer HorizontalAlignment}"
+            SelectedItem="{x:Static HorizontalAlignment.Center}" />
+        <ListBox
+            Name="listBox2"
+            ItemsSource="{iri:EnumMixer {x:Type iri:EnumMixerExtension}}" />
+    </StackPanel>
+</UserControl>
