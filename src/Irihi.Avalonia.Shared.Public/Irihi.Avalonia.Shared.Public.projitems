@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IOuterContentControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IPopupInnerContent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IPopupOuterContent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\MarkupValueConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\CornerRadiusMixerConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ResourceConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessMixerConverter.cs" />
