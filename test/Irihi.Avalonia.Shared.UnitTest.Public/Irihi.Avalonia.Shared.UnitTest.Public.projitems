@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableExtensionTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\PropertyPseudoClassHelperTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\RoutedEventExtensionTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\SelectionDataTemplateSelectorTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Mocks\MockResourceConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Shapes\IrihiLogoTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Shapes\PureCircleTest.cs" />
