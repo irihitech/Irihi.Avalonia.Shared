@@ -57,7 +57,7 @@ public class CornerRadiusMixerConverterTests
             Math.PI,
             new CornerRadius(1, 1, 1, 1),
             new CornerRadius(0, Math.PI, Math.PI, 0)
-        },
+        }
     };
 
     [Theory]
@@ -99,7 +99,6 @@ public class CornerRadiusMixerConverterTests
     [Fact]
     public void ConvertBack_ThrowsNotImplementedException()
     {
-        Assert.Throws<NotImplementedException>(() => _converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture)
-        );
+        Assert.Throws<NotImplementedException>(() => _converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture));
     }
 }

@@ -105,7 +105,6 @@ public class ThicknessMixerConverterTests
     [Fact]
     public void ConvertBack_ThrowsNotImplementedException()
     {
-        Assert.Throws<NotImplementedException>(() => _converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture)
-        );
+        Assert.Throws<NotImplementedException>(() => _converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture));
     }
 }
