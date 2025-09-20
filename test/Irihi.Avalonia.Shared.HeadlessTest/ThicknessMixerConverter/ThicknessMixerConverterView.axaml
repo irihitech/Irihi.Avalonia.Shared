@@ -31,5 +31,17 @@
             Name="button7"
             Padding="20"
             Margin="{Binding $self.Padding,Converter={iri:ThicknessMixerConverter 'Vertical,BottomLeft'}}" />
+        <Button
+            Name="button8"
+            Padding="20"
+            Margin="{Binding $self.Padding,Converter={iri:ThicknessMixerConverter Scale=2}}" />
+        <Button
+            Name="button9"
+            Padding="20"
+            Margin="{Binding $self.Padding,Converter={iri:ThicknessMixerConverter Horizontal,Scale=0.5}}" />
+        <Button
+            Name="button10"
+            Padding="20"
+            Margin="{Binding $self.Padding,Converter={iri:ThicknessMixerConverter TopLeft,Scale=-1}}" />
     </StackPanel>
 </UserControl>

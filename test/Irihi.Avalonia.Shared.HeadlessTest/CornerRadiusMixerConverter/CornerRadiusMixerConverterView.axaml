@@ -27,5 +27,14 @@
         <Button
             Name="button7"
             CornerRadius="{Binding #border.CornerRadius,Converter={iri:CornerRadiusMixerConverter 'Top,Left'}}" />
+        <Button
+            Name="button8"
+            CornerRadius="{Binding #border.CornerRadius,Converter={iri:CornerRadiusMixerConverter Scale=2}}" />
+        <Button
+            Name="button9"
+            CornerRadius="{Binding #border.CornerRadius,Converter={iri:CornerRadiusMixerConverter Top,Scale=0.5}}" />
+        <Button
+            Name="button10"
+            CornerRadius="{Binding #border.CornerRadius,Converter={iri:CornerRadiusMixerConverter BottomLeft,Scale=-1}}" />
     </StackPanel>
 </UserControl>
