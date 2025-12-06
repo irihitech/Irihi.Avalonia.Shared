@@ -8,42 +8,61 @@ public class ThicknessMixerConverterTests
 {
     private readonly ThicknessMixerConverter _converter = new();
 
-    public static TheoryData<ThicknessPosition, Thickness, Thickness> PositionTestCases => new()
+    public static TheoryData<ThicknessPosition, double, Thickness, Thickness> PositionTestCases => new()
     {
         {
             ThicknessPosition.All,
+            1,
             new Thickness(1, 2, 3, 4),
             new Thickness(1, 2, 3, 4)
         },
         {
             ThicknessPosition.Vertical | ThicknessPosition.Right,
+            1,
             new Thickness(10, 20, 30, 40),
             new Thickness(0, 20, 30, 40)
         },
         {
             ThicknessPosition.Horizontal,
+            2,
             new Thickness(5, 6, 7, 8),
-            new Thickness(5, 0, 7, 0)
+            new Thickness(10, 0, 14, 0)
         },
         {
             ThicknessPosition.TopLeft,
+            0.5,
             new Thickness(2, 3, 4, 5),
-            new Thickness(2, 3, 0, 0)
+            new Thickness(1, 1.5, 0, 0)
         },
         {
             ThicknessPosition.None,
+            1,
             new Thickness(10, 20, 30, 40),
             new Thickness(0)
         },
         {
             ThicknessPosition.Bottom,
+            0,
             new Thickness(100, 200, 300, 400),
-            new Thickness(0, 0, 0, 400)
+            new Thickness(0)
         },
         {
             ThicknessPosition.Vertical | ThicknessPosition.BottomLeft,
+            -1,
             new Thickness(6, 7, 8, 9),
-            new Thickness(6, 7, 0, 9)
+            new Thickness(-6, -7, 0, -9)
+        },
+        {
+            ThicknessPosition.TopRight,
+            20,
+            new Thickness(10, 20, 30, 40),
+            new Thickness(0, 400, 600, 0)
+        },
+        {
+            ThicknessPosition.BottomRight,
+            Math.PI,
+            new Thickness(1, 1, 1, 1),
+            new Thickness(0, 0, Math.PI, Math.PI)
         }
     };
 
@@ -51,11 +70,16 @@ public class ThicknessMixerConverterTests
     [MemberData(nameof(PositionTestCases))]
     public void Convert_WithPositionFlags_ReturnsFilteredThickness(
         ThicknessPosition position,
+        double scale,
         Thickness input,
         Thickness expected)
     {
         // Arrange
-        var converter = new ThicknessMixerConverter(position);
+        var converter = new ThicknessMixerConverter
+        {
+            Position = position,
+            Scale = scale
+        };
 
         // Act
         var result = converter.Convert(input, typeof(Thickness), null, CultureInfo.InvariantCulture);
@@ -81,8 +105,6 @@ public class ThicknessMixerConverterTests
     [Fact]
     public void ConvertBack_ThrowsNotImplementedException()
     {
-        Assert.Throws<NotImplementedException>(
-            () => _converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture)
-        );
+        Assert.Throws<NotImplementedException>(() => _converter.ConvertBack(null, typeof(object), null, CultureInfo.InvariantCulture));
     }
 }

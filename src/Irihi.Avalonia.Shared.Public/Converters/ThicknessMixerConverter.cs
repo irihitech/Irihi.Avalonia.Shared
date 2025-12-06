@@ -5,7 +5,9 @@ namespace Irihi.Avalonia.Shared.Converters;
 
 public class ThicknessMixerConverter : MarkupValueConverter
 {
-    private readonly ThicknessPosition _position = ThicknessPosition.All;
+    public ThicknessPosition Position { get; set; } = ThicknessPosition.All;
+
+    public double Scale { get; set; } = 1;
 
     public ThicknessMixerConverter()
     {
@@ -13,17 +15,17 @@ public class ThicknessMixerConverter : MarkupValueConverter
 
     public ThicknessMixerConverter(ThicknessPosition position)
     {
-        _position = position;
+        Position = position;
     }
 
     public override object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is Thickness t)
         {
-            var left = _position.HasFlag(ThicknessPosition.Left) ? t.Left : 0d;
-            var top = _position.HasFlag(ThicknessPosition.Top) ? t.Top : 0d;
-            var right = _position.HasFlag(ThicknessPosition.Right) ? t.Right : 0d;
-            var bottom = _position.HasFlag(ThicknessPosition.Bottom) ? t.Bottom : 0d;
+            var left = Position.HasFlag(ThicknessPosition.Left) ? t.Left * Scale : 0;
+            var top = Position.HasFlag(ThicknessPosition.Top) ? t.Top * Scale : 0;
+            var right = Position.HasFlag(ThicknessPosition.Right) ? t.Right * Scale : 0;
+            var bottom = Position.HasFlag(ThicknessPosition.Bottom) ? t.Bottom * Scale : 0;
             return new Thickness(left, top, right, bottom);
         }
 

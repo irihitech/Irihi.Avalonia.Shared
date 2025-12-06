@@ -90,6 +90,33 @@ public class CornerRadiusMixerConverterTests
     }
 
     [AvaloniaFact]
+    public void CornerRadiusConverter_WithScale2_ShouldDoubleAllCorners()
+    {
+        var view = new CornerRadiusMixerConverterView();
+        var window = new Window { Content = view };
+        window.Show();
+        Assert.Equal(new CornerRadius(20, 20, 20, 20), view.button8.CornerRadius);
+    }
+
+    [AvaloniaFact]
+    public void CornerRadiusConverter_WithTopAndScaleHalf_ShouldHalveTopCorners()
+    {
+        var view = new CornerRadiusMixerConverterView();
+        var window = new Window { Content = view };
+        window.Show();
+        Assert.Equal(new CornerRadius(5, 5, 0, 0), view.button9.CornerRadius);
+    }
+
+    [AvaloniaFact]
+    public void CornerRadiusConverter_WithBottomLeftAndScaleMinus1_ShouldNegateBottomLeft()
+    {
+        var view = new CornerRadiusMixerConverterView();
+        var window = new Window { Content = view };
+        window.Show();
+        Assert.Equal(new CornerRadius(0, 0, 0, -10), view.button10.CornerRadius);
+    }
+
+    [AvaloniaFact]
     public void CornerRadiusConverter_ShouldReactToRuntimeChanges()
     {
         var view = new CornerRadiusMixerConverterView();
