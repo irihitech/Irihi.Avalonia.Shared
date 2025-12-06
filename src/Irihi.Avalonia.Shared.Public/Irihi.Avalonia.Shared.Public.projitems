@@ -9,12 +9,15 @@
     <Import_RootNamespace>Irihi.Avalonia.Shared.ShareProject</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Common\DataContainerTemplates.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\IRIHI_CommandBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\IRIHI_CommandBase`T.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\IRIHI_ObservableBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\PartNames.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\PseudoClassName.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IClearControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Contracts\IDataContainerTemplate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Contracts\IDataContainerTemplateHost.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IInnerContentControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IOuterContentControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Contracts\IPopupInnerContent.cs" />
