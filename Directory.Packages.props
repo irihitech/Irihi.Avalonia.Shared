@@ -1,0 +1,21 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Avalonia 11.0.9 standardized across main projects -->
+    <PackageVersion Include="Avalonia" Version="11.0.9" />
+    <PackageVersion Include="Avalonia.Desktop" Version="11.0.9" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.0.9" />
+    <!-- Diagnostic and headless testing on 11.0.7 -->
+    <PackageVersion Include="Avalonia.Diagnostics" Version="11.0.7" />
+    <PackageVersion Include="Avalonia.Headless.XUnit" Version="11.0.7" />
+    <!-- Semi theme used in sample -->
+    <PackageVersion Include="Semi.Avalonia" Version="11.0.7.7" />
+    <!-- Test infrastructure latest versions -->
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.2" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+  </ItemGroup>
+</Project>

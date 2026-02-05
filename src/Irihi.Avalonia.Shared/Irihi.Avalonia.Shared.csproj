@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Avalonia" Version="11.0.0" />
+      <PackageReference Include="Avalonia" />
     </ItemGroup>
 
     <Import Project="..\Irihi.Avalonia.Shared.Public\Irihi.Avalonia.Shared.Public.projitems" Label="Shared" />
