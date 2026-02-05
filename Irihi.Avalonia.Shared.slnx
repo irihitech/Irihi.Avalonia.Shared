@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/SolutionFiles/">
+    <File Path=".github/workflows/pack.yml" />
+    <File Path=".github/workflows/release-tag.yml" />
+    <File Path=".github/workflows/test.yml" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="test/Irihi.Avalonia.Shared.HeadlessTest/Irihi.Avalonia.Shared.HeadlessTest.csproj" />
+    <Project Path="test/Irihi.Avalonia.Shared.UnitTest.Public/Irihi.Avalonia.Shared.UnitTest.Public.shproj" />
+    <Project Path="test/Irihi.Avalonia.Shared.UnitTest/Irihi.Avalonia.Shared.UnitTest.csproj" />
+  </Folder>
+  <Project Path="sample/Sample/Sample.csproj" />
+  <Project Path="src/Irihi.Avalonia.Shared.Contracts/Irihi.Avalonia.Shared.Contracts.csproj" />
+  <Project Path="src/Irihi.Avalonia.Shared.Public/Irihi.Avalonia.Shared.Public.shproj" />
+  <Project Path="src/Irihi.Avalonia.Shared/Irihi.Avalonia.Shared.csproj" />
+</Solution>
