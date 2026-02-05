@@ -7,9 +7,9 @@
     <PackageVersion Include="Avalonia" Version="11.0.9" />
     <PackageVersion Include="Avalonia.Desktop" Version="11.0.9" />
     <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.0.9" />
-    <!-- Diagnostic and headless testing on 11.0.7 -->
-    <PackageVersion Include="Avalonia.Diagnostics" Version="11.0.7" />
-    <PackageVersion Include="Avalonia.Headless.XUnit" Version="11.0.7" />
+    <!-- Diagnostic and headless testing aligned with main Avalonia version -->
+    <PackageVersion Include="Avalonia.Diagnostics" Version="11.0.9" />
+    <PackageVersion Include="Avalonia.Headless.XUnit" Version="11.0.9" />
     <!-- Semi theme used in sample -->
     <PackageVersion Include="Semi.Avalonia" Version="11.0.7.7" />
     <!-- Test infrastructure latest versions -->
