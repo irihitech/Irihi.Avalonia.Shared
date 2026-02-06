@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Build/">
     <File Path="Directory.Packages.props" />
+    <File Path="Nuget.Config" />
   </Folder>
   <Folder Name="/Build/Sample/">
     <File Path="sample/Directory.Packages.props" />

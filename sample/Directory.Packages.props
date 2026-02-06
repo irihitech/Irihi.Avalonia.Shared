@@ -1,14 +1,14 @@
 <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    <AvaloniaVersion>12.0.999-cibuild0061243-alpha</AvaloniaVersion>
+    <AvaloniaVersion>12.0.999-cibuild0061987-alpha</AvaloniaVersion>
 <!--    <AvaloniaVersion>11.0.9</AvaloniaVersion>-->
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="Avalonia" Version="$(AvaloniaVersion)" />
     <PackageVersion Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
     <PackageVersion Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
-    <PackageVersion Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
+<!--    <PackageVersion Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />-->
     <PackageVersion Include="Semi.Avalonia" Version="11.0.7.7" />
   </ItemGroup>
 </Project>

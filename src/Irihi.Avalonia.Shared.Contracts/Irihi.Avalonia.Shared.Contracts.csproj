@@ -18,10 +18,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Update="irihi.png">
-        <Pack>true</Pack>
-        <PackagePath></PackagePath>
-      </None>
+        <None Include="irihi.png" Pack="true" PackagePath="" />
     </ItemGroup>
 
 </Project>

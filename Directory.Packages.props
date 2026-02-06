@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    <AvaloniaVersion>12.0.999-cibuild0061243-alpha</AvaloniaVersion>
+    <AvaloniaVersion>12.0.999-cibuild0061987-alpha</AvaloniaVersion>
 <!--    <AvaloniaVersion>11.0.0</AvaloniaVersion>-->
   </PropertyGroup>
   <ItemGroup>
