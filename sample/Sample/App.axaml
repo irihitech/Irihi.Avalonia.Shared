@@ -3,6 +3,6 @@
              x:Class="Sample.App"
              RequestedThemeVariant="Default">
     <Application.Styles>
-        <StyleInclude Source="avares://Semi.Avalonia/Themes/Index.axaml"></StyleInclude>
+        <StyleInclude Source="avares://Semi.Avalonia/Themes/Index.axaml" />
     </Application.Styles>
 </Application>
