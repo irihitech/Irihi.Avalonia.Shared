@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
-        <Version>0.3.1</Version>
+        <Version>0.4.0-nightly-20260206184422</Version>
         <Authors>IRIHI Technology Co., Ltd.</Authors>
         <PackageId>Irihi.Avalonia.Shared</PackageId>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
