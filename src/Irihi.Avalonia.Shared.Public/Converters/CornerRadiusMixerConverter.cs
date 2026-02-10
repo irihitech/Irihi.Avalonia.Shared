@@ -5,7 +5,9 @@ namespace Irihi.Avalonia.Shared.Converters;
 
 public class CornerRadiusMixerConverter : MarkupValueConverter
 {
-    private readonly CornerRadiusPosition _position = CornerRadiusPosition.All;
+    public CornerRadiusPosition Position { get; set; } = CornerRadiusPosition.All;
+
+    public double Scale { get; set; } = 1;
 
     public CornerRadiusMixerConverter()
     {
@@ -13,17 +15,17 @@ public class CornerRadiusMixerConverter : MarkupValueConverter
 
     public CornerRadiusMixerConverter(CornerRadiusPosition position)
     {
-        _position = position;
+        Position = position;
     }
 
     public override object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is CornerRadius r)
         {
-            double topLeft = _position.HasFlag(CornerRadiusPosition.TopLeft) ? r.TopLeft : 0;
-            double topRight = _position.HasFlag(CornerRadiusPosition.TopRight) ? r.TopRight : 0;
-            double bottomLeft = _position.HasFlag(CornerRadiusPosition.BottomLeft) ? r.BottomLeft : 0;
-            double bottomRight = _position.HasFlag(CornerRadiusPosition.BottomRight) ? r.BottomRight : 0;
+            var topLeft = Position.HasFlag(CornerRadiusPosition.TopLeft) ? r.TopLeft * Scale : 0;
+            var topRight = Position.HasFlag(CornerRadiusPosition.TopRight) ? r.TopRight * Scale : 0;
+            var bottomLeft = Position.HasFlag(CornerRadiusPosition.BottomLeft) ? r.BottomLeft * Scale : 0;
+            var bottomRight = Position.HasFlag(CornerRadiusPosition.BottomRight) ? r.BottomRight * Scale : 0;
             return new CornerRadius(topLeft, topRight, bottomRight, bottomLeft);
         }
 

@@ -90,6 +90,33 @@ public class ThicknessMixerConverterTests
     }
 
     [AvaloniaFact]
+    public void ThicknessConverter_WithScale2_ShouldDoubleAllEdges()
+    {
+        var view = new ThicknessMixerConverterView();
+        var window = new Window { Content = view };
+        window.Show();
+        Assert.Equal(new Thickness(40), view.button8.Margin);
+    }
+
+    [AvaloniaFact]
+    public void ThicknessConverter_WithHorizontalAndScaleHalf_ShouldHalveLeftRight()
+    {
+        var view = new ThicknessMixerConverterView();
+        var window = new Window { Content = view };
+        window.Show();
+        Assert.Equal(new Thickness(10, 0, 10, 0), view.button9.Margin);
+    }
+
+    [AvaloniaFact]
+    public void ThicknessConverter_WithTopLeftAndScaleMinus1_ShouldNegateTopLeft()
+    {
+        var view = new ThicknessMixerConverterView();
+        var window = new Window { Content = view };
+        window.Show();
+        Assert.Equal(new Thickness(-20, -20, 0, 0), view.button10.Margin);
+    }
+
+    [AvaloniaFact]
     public void ThicknessConverter_ShouldReactToRuntimeChanges()
     {
         var view = new ThicknessMixerConverterView();
