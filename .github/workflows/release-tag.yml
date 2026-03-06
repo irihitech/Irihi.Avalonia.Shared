@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
@@ -24,7 +24,7 @@ jobs:
           dotnet pack ./src/Irihi.Avalonia.Shared -o ./nugets
           dotnet pack ./src/Irihi.Avalonia.Shared.Contracts -o ./nugets
       - name: Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
         with:
           generate_release_notes: true

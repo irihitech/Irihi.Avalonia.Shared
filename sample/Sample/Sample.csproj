@@ -5,23 +5,21 @@
         <Nullable>enable</Nullable>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
-<!--        <AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>-->
     </PropertyGroup>
-    
+
     <ItemGroup>
-        <PackageReference Include="Avalonia" />
-        <PackageReference Include="Avalonia.Desktop" />
-        <PackageReference Include="Avalonia.Fonts.Inter" />
-        <PackageReference Include="Semi.Avalonia" />
-        <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-<!--        <PackageReference Include="Avalonia.Diagnostics">-->
-<!--            <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>-->
-<!--            <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>-->
-<!--        </PackageReference>-->
+        <PackageReference Include="Avalonia"/>
+        <PackageReference Include="Avalonia.Desktop"/>
+        <PackageReference Include="Avalonia.Fonts.Inter"/>
+        <PackageReference Include="Semi.Avalonia"/>
+        <!--Condition below is needed to remove AvaloniaUI.DiagnosticsSupport package from build output in Release configuration.-->
+        <PackageReference Include="AvaloniaUI.DiagnosticsSupport">
+            <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+            <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+        </PackageReference>
     </ItemGroup>
 
-
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Irihi.Avalonia.Shared\Irihi.Avalonia.Shared.csproj" />
+        <ProjectReference Include="..\..\src\Irihi.Avalonia.Shared\Irihi.Avalonia.Shared.csproj"/>
     </ItemGroup>
 </Project>
