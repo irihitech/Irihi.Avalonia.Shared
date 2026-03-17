@@ -25,7 +25,7 @@ public class ResourceDictionaryHelperTests
 
         b.ResourcesChanged += (_, _) => count++;
         
-        ResourceDictionaryHelper.SetResources(target, content);
+        target.BulkSetResources(content);
 
         Assert.Equal("Value1", target["Key1"]);
         Assert.Equal("Value2", target["Key2"]);
@@ -46,7 +46,7 @@ public class ResourceDictionaryHelperTests
             ["Key1"] = "NewValue"
         };
 
-        ResourceDictionaryHelper.SetResources(target, content);
+        target.BulkSetResources(content);
 
         Assert.Equal("NewValue", target["Key1"]);
     }
@@ -60,7 +60,7 @@ public class ResourceDictionaryHelperTests
         };
         var content = new ResourceDictionary();
 
-        ResourceDictionaryHelper.SetResources(target, content);
+        target.BulkSetResources(content);
 
         Assert.Equal("Value1", target["Key1"]);
         Assert.Single(target);
@@ -75,7 +75,7 @@ public class ResourceDictionaryHelperTests
             ["Key1"] = "Value1"
         };
 
-        ResourceDictionaryHelper.SetResources(target, content);
+        target.BulkSetResources(content);
 
         Assert.Single(target);
         Assert.Equal("Value1", target["Key1"]);

@@ -10,7 +10,7 @@ public static class ResourceDictionaryHelper
     /// </summary>
     /// <param name="target">The resource dictionary to update.</param>
     /// <param name="content">The resource dictionary whose entries are copied into <paramref name="target"/>.</param>
-    public static void SetResources(IResourceDictionary? target, IResourceDictionary? content)
+    public static void BulkSetResources(this IResourceDictionary? target, IResourceDictionary? content)
     {
         if (target is null || content is null) return;
         if (target is ResourceDictionary resourceDictionary)
