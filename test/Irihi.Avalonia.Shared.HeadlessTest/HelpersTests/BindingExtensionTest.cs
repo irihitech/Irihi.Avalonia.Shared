@@ -1,19 +1,21 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Headless.XUnit;
 using Avalonia.Media;
 using Irihi.Avalonia.Shared.Helpers;
+using Xunit;
 
-namespace Irihi.Avalonia.Shared.UnitTest.Helpers;
+namespace Irihi.Avalonia.Shared.HeadlessTest;
 
 public class BindingExtensionTest
 {
-    [Fact]
+    [AvaloniaFact]
     public void SetBinding_Success()
     {
         TextBlock t = new TextBlock();
         t.Foreground = new SolidColorBrush(Colors.Black);
         t.Background = new SolidColorBrush(Colors.White);
         Assert.NotEqual(t.Foreground.ToString(), t.Background.ToString());
-        var result = t.TryBind(TextBlock.ForegroundProperty, t[!TextBlock.BackgroundProperty]);
+        var result = t.TryBind(TextBlock.ForegroundProperty, t[~TextBlock.BackgroundProperty]);
         Assert.True(result.Result);
         // Binding init success
         Assert.Equal(t.Foreground.ToString(), new SolidColorBrush(Colors.White).ToString());
@@ -31,7 +33,7 @@ public class BindingExtensionTest
         Assert.Equal(t.Foreground.ToString(), new SolidColorBrush(Colors.Black).ToString());
     }
     
-    [Fact]
+    [AvaloniaFact]
     public void SetNullBinding_Fail()
     {
         TextBlock t = new TextBlock();
