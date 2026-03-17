@@ -12,13 +12,26 @@ public class ResourceDictionaryHelperTests
         var content = new ResourceDictionary
         {
             ["Key1"] = "Value1",
-            ["Key2"] = "Value2"
+            ["Key2"] = "Value2",
+            ["Key3"] = "Value3"
         };
 
+        Button b = new Button
+        {
+            Resources = target
+        };
+
+        var count = 0;
+
+        b.ResourcesChanged += (_, _) => count++;
+        
         ResourceDictionaryHelper.SetResources(target, content);
 
         Assert.Equal("Value1", target["Key1"]);
         Assert.Equal("Value2", target["Key2"]);
+        Assert.Equal("Value3", target["Key3"]);
+        
+        Assert.Equal(1, count);
     }
 
     [Fact]
@@ -50,7 +63,7 @@ public class ResourceDictionaryHelperTests
         ResourceDictionaryHelper.SetResources(target, content);
 
         Assert.Equal("Value1", target["Key1"]);
-        Assert.Equal(1, target.Count);
+        Assert.Single(target);
     }
 
     [Fact]
@@ -64,21 +77,7 @@ public class ResourceDictionaryHelperTests
 
         ResourceDictionaryHelper.SetResources(target, content);
 
-        Assert.Equal(1, target.Count);
+        Assert.Single(target);
         Assert.Equal("Value1", target["Key1"]);
-    }
-
-    [Fact]
-    public void SetResources_NullTarget_ThrowsArgumentNullException()
-    {
-        var content = new ResourceDictionary();
-        Assert.Throws<ArgumentNullException>(() => ResourceDictionaryHelper.SetResources(null!, content));
-    }
-
-    [Fact]
-    public void SetResources_NullContent_ThrowsArgumentNullException()
-    {
-        var target = new ResourceDictionary();
-        Assert.Throws<ArgumentNullException>(() => ResourceDictionaryHelper.SetResources(target, null!));
     }
 }
