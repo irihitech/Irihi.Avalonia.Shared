@@ -80,4 +80,25 @@ public class ResourceDictionaryHelperTests
         Assert.Single(target);
         Assert.Equal("Value1", target["Key1"]);
     }
+
+    [Fact]
+    public void SetTwice_NotifyTwice()
+    {
+        Button button = new Button();
+        var count = 0;
+        button.ResourcesChanged += (_, _) => count++;
+        var resource1 = new ResourceDictionary
+        {
+            ["Key1"] = "Value1",
+            ["Key2"] = "Value2"
+        };
+        var resource2 = new ResourceDictionary
+        {
+            ["Key3"] = "Value3",
+            ["Key4"] = "Value4"
+        };
+        button.Resources.BulkSetResources(resource1);
+        button.Resources.BulkSetResources(resource2);
+        Assert.Equal(2, count);
+    }
 }
