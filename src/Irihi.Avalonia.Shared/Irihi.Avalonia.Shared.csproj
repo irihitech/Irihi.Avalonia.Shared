@@ -25,6 +25,4 @@
       <PackageReference Include="Avalonia" />
     </ItemGroup>
 
-    <Import Project="..\Irihi.Avalonia.Shared.Public\Irihi.Avalonia.Shared.Public.projitems" Label="Shared" />
-
 </Project>

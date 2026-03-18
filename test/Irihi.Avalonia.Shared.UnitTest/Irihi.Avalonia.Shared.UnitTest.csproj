@@ -26,11 +26,5 @@
     <ItemGroup>
       <ProjectReference Include="..\..\src\Irihi.Avalonia.Shared\Irihi.Avalonia.Shared.csproj" />
     </ItemGroup>
-    
-    <ItemGroup>
-        <AvaloniaResource Include="..\Irihi.Avalonia.Shared.UnitTest.Public\Mocks\MockResourceConverter.axaml" />
-    </ItemGroup>
-
-    <Import Project="..\Irihi.Avalonia.Shared.UnitTest.Public\Irihi.Avalonia.Shared.UnitTest.Public.projitems" Label="Shared" />
 
 </Project>
