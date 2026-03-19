@@ -322,19 +322,19 @@ public class RoutedEventExtensionTest
         var button = new Button();
         var panel = new Panel();
         int count = 0;
-        void Handler(object? sender, GotFocusEventArgs args)
+        void Handler(object? sender, FocusChangedEventArgs args)
         {
             count++;
         }
         InputElement.GotFocusEvent.AddHandler(Handler, button, panel);
-        button.RaiseEvent(new GotFocusEventArgs(){ Source = button, RoutedEvent = InputElement.GotFocusEvent});
-        panel.RaiseEvent(new GotFocusEventArgs(){ Source = panel, RoutedEvent = InputElement.GotFocusEvent});
+        button.RaiseEvent(new FocusChangedEventArgs(InputElement.GotFocusEvent) { Source = button });
+        panel.RaiseEvent(new FocusChangedEventArgs(InputElement.GotFocusEvent) { Source = panel });
         
         Assert.Equal(2, count);
         
         InputElement.GotFocusEvent.RemoveHandler(Handler, button, panel);
-        button.RaiseEvent(new GotFocusEventArgs(){ Source = button, RoutedEvent = InputElement.GotFocusEvent});
-        panel.RaiseEvent(new GotFocusEventArgs(){ Source = panel, RoutedEvent = InputElement.GotFocusEvent});
+        button.RaiseEvent(new FocusChangedEventArgs(InputElement.GotFocusEvent) { Source = button });
+        panel.RaiseEvent(new FocusChangedEventArgs(InputElement.GotFocusEvent) { Source = panel });
         
         Assert.Equal(2, count);
     }
@@ -345,13 +345,13 @@ public class RoutedEventExtensionTest
         var button = new Button();
         var panel = new Panel();
         int count = 0;
-        void Handler(object? sender, GotFocusEventArgs args)
+        void Handler(object? sender, FocusChangedEventArgs args)
         {
             count++;
         }
         var disposable = InputElement.GotFocusEvent.AddDisposableHandler(Handler, button, panel);
-        button.RaiseEvent(new GotFocusEventArgs(){ Source = button, RoutedEvent = InputElement.GotFocusEvent});
-        panel.RaiseEvent(new GotFocusEventArgs(){ Source = panel, RoutedEvent = InputElement.GotFocusEvent});
+        button.RaiseEvent(new FocusChangedEventArgs(InputElement.GotFocusEvent){ Source = button });
+        panel.RaiseEvent(new FocusChangedEventArgs(InputElement.GotFocusEvent){ Source = panel });
         
         Assert.Equal(2, count);
         
@@ -366,19 +366,19 @@ public class RoutedEventExtensionTest
         var button = new Button();
         var panel = new Panel();
         int count = 0;
-        void Handler(object? sender, GotFocusEventArgs args)
+        void Handler(object? sender, FocusChangedEventArgs args)
         {
             count++;
         }
         InputElement.GotFocusEvent.AddHandler(Handler, RoutingStrategies.Bubble, false, button, panel);
-        button.RaiseEvent(new GotFocusEventArgs(){ Source = button, RoutedEvent = InputElement.GotFocusEvent});
-        panel.RaiseEvent(new GotFocusEventArgs(){ Source = panel, RoutedEvent = InputElement.GotFocusEvent});
+        button.RaiseEvent(new FocusChangedEventArgs(InputElement.GotFocusEvent){ Source = button });
+        panel.RaiseEvent(new FocusChangedEventArgs(InputElement.GotFocusEvent){ Source = panel });
         
         Assert.Equal(2, count);
         
         InputElement.GotFocusEvent.RemoveHandler(Handler, button, panel);
-        button.RaiseEvent(new GotFocusEventArgs(){ Source = button, RoutedEvent = InputElement.GotFocusEvent});
-        panel.RaiseEvent(new GotFocusEventArgs(){ Source = panel, RoutedEvent = InputElement.GotFocusEvent});
+        button.RaiseEvent(new FocusChangedEventArgs(InputElement.GotFocusEvent){ Source = button });
+        panel.RaiseEvent(new FocusChangedEventArgs(InputElement.GotFocusEvent){ Source = panel });
         
         Assert.Equal(2, count);
     }
@@ -389,13 +389,13 @@ public class RoutedEventExtensionTest
         var button = new Button();
         var panel = new Panel();
         int count = 0;
-        void Handler(object? sender, GotFocusEventArgs args)
+        void Handler(object? sender, FocusChangedEventArgs args)
         {
             count++;
         }
         var disposable = InputElement.GotFocusEvent.AddDisposableHandler(Handler, RoutingStrategies.Bubble, false, button, panel);
-        button.RaiseEvent(new GotFocusEventArgs(){ Source = button, RoutedEvent = InputElement.GotFocusEvent});
-        panel.RaiseEvent(new GotFocusEventArgs(){ Source = panel, RoutedEvent = InputElement.GotFocusEvent});
+        button.RaiseEvent(new FocusChangedEventArgs(InputElement.GotFocusEvent){ Source = button });
+        panel.RaiseEvent(new FocusChangedEventArgs(InputElement.GotFocusEvent){ Source = panel });
         
         Assert.Equal(2, count);
         
