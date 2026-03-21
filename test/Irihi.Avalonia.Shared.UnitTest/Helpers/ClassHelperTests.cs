@@ -89,7 +89,9 @@ public class ClassHelperTests
     public void ClassesProperty_Should_Not_Throw_Exception_When_Null()
     {
         var control = new Button();
+#pragma warning disable CS8625
         ClassHelper.SetClasses(control, null);
+#pragma warning restore CS8625
         Assert.Null(ClassHelper.GetClasses(control));
     }
 }
