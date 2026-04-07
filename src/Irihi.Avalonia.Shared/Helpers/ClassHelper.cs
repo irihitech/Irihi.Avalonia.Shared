@@ -22,16 +22,16 @@ public class ClassHelper
     {
         if (arg2.NewValue is not StyledElement styledElement) return;
         arg1.Classes.Clear();
-        var nonPseudoClasses = styledElement.Classes.Where(c => !c.StartsWith(":"));
+        var nonPseudoClasses = styledElement.Classes.Where(c => !c.StartsWith(':'));
         arg1.Classes.AddRange(nonPseudoClasses);
         styledElement.Classes.WeakSubscribe((o, e) => OnSourceClassesChanged(o, e, arg1));
     }
 
-    private static void OnSourceClassesChanged(object sender, NotifyCollectionChangedEventArgs e, StyledElement target)
+    private static void OnSourceClassesChanged(object? sender, NotifyCollectionChangedEventArgs e, StyledElement target)
     {
         if (sender is not AvaloniaList<string> classes) return;
         target.Classes.Clear();
-        var nonPseudoClasses = classes.Where(c => !c.StartsWith(":"));
+        var nonPseudoClasses = classes.Where(c => !c.StartsWith(':'));
         target.Classes.AddRange(nonPseudoClasses);
     }
 

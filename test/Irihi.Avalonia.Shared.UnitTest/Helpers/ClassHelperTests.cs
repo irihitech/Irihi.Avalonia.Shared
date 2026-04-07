@@ -89,7 +89,7 @@ public class ClassHelperTests
     public void ClassesProperty_Should_Not_Throw_Exception_When_Null()
     {
         var control = new Button();
-        ClassHelper.SetClasses(control, null);
+        ClassHelper.SetClasses(control, null!);
         Assert.Null(ClassHelper.GetClasses(control));
     }
 }
