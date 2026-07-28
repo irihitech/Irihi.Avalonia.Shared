@@ -6,19 +6,30 @@ namespace Irihi.Avalonia.Shared.Shapes;
 
 public class IrihiLogo : Shape
 {
+    [Obsolete("Use CornerRatio instead.")]
     public static readonly StyledProperty<double> CornerProperty = AvaloniaProperty.Register<IrihiLogo, double>(
         nameof(Corner));
+
+    public static readonly StyledProperty<double> CornerRatioProperty = AvaloniaProperty.Register<IrihiLogo, double>(
+        nameof(CornerRatio));
 
     static IrihiLogo()
     {
         WidthProperty.OverrideDefaultValue<IrihiLogo>(40);
-        AffectsGeometry<IrihiLogo>(WidthProperty, CornerProperty, BoundsProperty);
+        AffectsGeometry<IrihiLogo>(WidthProperty, CornerRatioProperty, CornerProperty, BoundsProperty);
     }
 
+    [Obsolete("Use CornerRatio instead.")]
     public double Corner
     {
         get => GetValue(CornerProperty);
         set => SetValue(CornerProperty, value);
+    }
+
+    public double CornerRatio
+    {
+        get => GetValue(CornerRatioProperty);
+        set => SetValue(CornerRatioProperty, value);
     }
 
     // ---- cached contours ----
@@ -31,7 +42,6 @@ public class IrihiLogo : Shape
         var rows = src.GetLength(0);
         var cols = src.GetLength(1);
 
-        // add 1-pixel zero margin
         var bitmap = new byte[rows + 2, cols + 2];
         for (var r = 0; r < rows; r++)
         for (var c = 0; c < cols; c++)
@@ -48,8 +58,11 @@ public class IrihiLogo : Shape
         var ratio = Math.Min(Bounds.Width / 8, Bounds.Height / 6);
         if (ratio is 0) return null;
 
-        var cornerRatio = Corner > 0 ? Corner / ratio : 0;
-        return BitmapContourTracer.BuildGeometry(CachedContours, ratio, cornerRatio);
+        var cr = CornerRatio;
+        if (cr == 0 && Corner > 0)
+            cr = Corner / ratio;
+
+        return BitmapContourTracer.BuildGeometry(CachedContours, ratio, cr);
     }
 
     protected override Size MeasureOverride(Size availableSize)
