@@ -107,7 +107,7 @@ public partial class IrihiBand : Shape
 
     private static int GetExpectedWidth(List<char> label)
     {
-        var result = LeftFillWidth; // LogoWidth + LeftMargin
+        var result = LeftFillWidth;
         foreach (var c in label)
         {
             if (GlyphWidthMapping.TryGetValue(c, out var width))
@@ -120,71 +120,132 @@ public partial class IrihiBand : Shape
         return result;
     }
 
+    // ------------------------------------------------------------------------
+    // Bitmap → rect decomposition → StreamGeometry
+    // ------------------------------------------------------------------------
+
     private Geometry CreateGeometry(List<char> label, double unit, int expectedWidth)
     {
-        // === 左边：填充区域（阳）抠出 logo（阴）===
-        var leftFill = new RectangleGeometry(new Rect(
-            LeftFillX * unit, 0,
-            LeftFillWidth * unit, BandHeight * unit));
-
-        var logoGeo = CreateBitmapGeometry(IrihiLogoBitmap,
-            LogoX * unit, LogoY * unit, unit, unit);
-
-        var leftPart = new CombinedGeometry(GeometryCombineMode.Exclude, leftFill, logoGeo);
-
-        // === 右边：边框（阳）+ 字母（阳），内部空白（阴）===
-        var textWidth = expectedWidth - TextStartX;
-
-        var rightOuter = new RectangleGeometry(new Rect(
-            TextStartX * unit, 0,
-            textWidth * unit, BandHeight * unit));
-
-        var rightInner = new RectangleGeometry(new Rect(
-            InnerX * unit, InnerY * unit,
-            (textWidth - BorderThickness * 2) * unit, InnerHeight * unit));
-
-        var rightBorder = new CombinedGeometry(GeometryCombineMode.Exclude, rightOuter, rightInner);
-
-        var lettersGeo = CreateLettersGeometry(label,
-            LetterX * unit, LetterY * unit, unit);
-
-        var rightPart = new CombinedGeometry(GeometryCombineMode.Union, rightBorder, lettersGeo);
-
-        return new CombinedGeometry(GeometryCombineMode.Union, leftPart, rightPart);
+        var bitmap = BuildFullBitmap(label, expectedWidth);
+        var rects = DecomposeToRectangles(bitmap);
+        return BuildStreamGeometry(rects, unit);
     }
 
-    private static Geometry CreateBitmapGeometry(byte[,] bitmap, double startX, double startY, double cellW, double cellH)
+    private byte[,] BuildFullBitmap(List<char> label, int expectedWidth)
     {
-        var group = new GeometryGroup { FillRule = FillRule.NonZero };
-        var rows = bitmap.GetLength(0);
-        var cols = bitmap.GetLength(1);
-        for (var r = 0; r < rows; r++)
-        {
-            for (var c = 0; c < cols; c++)
-            {
-                if (bitmap[r, c] == 1)
-                {
-                    group.Children.Add(new RectangleGeometry(
-                        new Rect(startX + c * cellW, startY + r * cellH, cellW, cellH)));
-                }
-            }
-        }
-        return group;
-    }
+        var bitmap = new byte[BandHeight, expectedWidth];
 
-    private Geometry CreateLettersGeometry(List<char> label, double startX, double startY, double unit)
-    {
-        var group = new GeometryGroup { FillRule = FillRule.NonZero };
-        var x = startX;
+        // 左边填充（阳）
+        for (var x = LeftFillX; x < LeftFillX + LeftFillWidth; x++)
+        for (var y = 0; y < BandHeight; y++)
+            bitmap[y, x] = 1;
+
+        // Logo 镂空（阴）
+        for (var r = 0; r < LogoHeight; r++)
+        for (var c = 0; c < LogoWidth; c++)
+            if (IrihiLogoBitmap[r, c] == 1)
+                bitmap[LogoY + r, LogoX + c] = 0;
+
+        // 右边边框（阳）
+        for (var x = TextStartX; x < expectedWidth; x++)
+        for (var y = 0; y < BandHeight; y++)
+            bitmap[y, x] = 1;
+
+        // 右边内部镂空（阴）
+        for (var x = InnerX; x < expectedWidth; x++)
+        for (var y = InnerY; y < InnerY + InnerHeight; y++)
+            bitmap[y, x] = 0;
+
+        // 字母填充（阳）
+        var letterX = LetterX;
         foreach (var c in label)
         {
-            if (GlyphMappings.TryGetValue(c, out var bitmap))
+            if (GlyphMappings.TryGetValue(c, out var letterBitmap))
             {
-                var charWidth = bitmap.GetLength(1);
-                group.Children.Add(CreateBitmapGeometry(bitmap, x, startY, unit, unit));
-                x += (charWidth + LetterGap) * unit;
+                var charW = letterBitmap.GetLength(1);
+                var charH = letterBitmap.GetLength(0);
+                for (var r = 0; r < charH; r++)
+                for (var col = 0; col < charW; col++)
+                    if (letterBitmap[r, col] == 1)
+                        bitmap[LetterY + r, letterX + col] = 1;
+                letterX += charW + LetterGap;
             }
         }
-        return group;
+
+        return bitmap;
+    }
+
+    private static List<(int left, int top, int width, int height)> DecomposeToRectangles(byte[,] bitmap)
+    {
+        var height = bitmap.GetLength(0);
+        var width = bitmap.GetLength(1);
+        var result = new List<(int, int, int, int)>();
+        var active = new List<(int left, int right, int top)>();
+
+        for (var y = 0; y < height; y++)
+        {
+            var runs = new List<(int left, int right)>();
+            for (var x = 0; x < width; x++)
+            {
+                if (bitmap[y, x] == 0) continue;
+                var runLeft = x;
+                while (x < width && bitmap[y, x] == 1) x++;
+                runs.Add((runLeft, x - 1));
+                x--;
+            }
+
+            var stillActive = new List<(int left, int right, int top)>();
+
+            foreach (var (rLeft, rRight) in runs)
+            {
+                var merged = false;
+                for (var i = 0; i < active.Count; i++)
+                {
+                    if (active[i].left == rLeft && active[i].right == rRight)
+                    {
+                        stillActive.Add(active[i]);
+                        active.RemoveAt(i);
+                        merged = true;
+                        break;
+                    }
+                }
+
+                if (!merged)
+                    stillActive.Add((rLeft, rRight, y));
+            }
+
+            foreach (var (aLeft, aRight, aTop) in active)
+                result.Add((aLeft, aTop, aRight - aLeft + 1, y - aTop));
+
+            active = stillActive;
+        }
+
+        foreach (var (aLeft, aRight, aTop) in active)
+            result.Add((aLeft, aTop, aRight - aLeft + 1, height - aTop));
+
+        return result;
+    }
+
+    private static StreamGeometry BuildStreamGeometry(
+        List<(int left, int top, int width, int height)> rects, double unit)
+    {
+        var geometry = new StreamGeometry();
+        using var ctx = geometry.Open();
+
+        foreach (var (left, top, w, h) in rects)
+        {
+            var x = left * unit;
+            var y = top * unit;
+            var rw = w * unit;
+            var rh = h * unit;
+
+            ctx.BeginFigure(new Point(x, y), isFilled: true);
+            ctx.LineTo(new Point(x + rw, y));
+            ctx.LineTo(new Point(x + rw, y + rh));
+            ctx.LineTo(new Point(x, y + rh));
+            ctx.EndFigure(isClosed: true);
+        }
+
+        return geometry;
     }
 }
