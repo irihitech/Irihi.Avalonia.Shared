@@ -54,6 +54,16 @@ public partial class IrihiBand : Shape
         AffectsMeasure<IrihiBand>(LabelProperty);
     }
 
+    private List<List<(int r, int c)>>? _cachedContours;
+    private int _cachedExpectedWidth;
+
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+        if (change.Property == LabelProperty)
+            _cachedContours = null;
+    }
+
     protected override Size MeasureOverride(Size availableSize)
     {
         var label = NormalizeLabel(Label);
@@ -98,8 +108,8 @@ public partial class IrihiBand : Shape
             return null;
 
         var result = raw
-            .Where(char.IsLetter)
-            .Select(char.ToUpper)
+            .Select(c => char.IsLetter(c) ? char.ToUpper(c) : c)
+            .Where(GlyphMappings.ContainsKey)
             .ToList();
 
         return result.Count == 0 ? null : result;
@@ -128,10 +138,15 @@ public partial class IrihiBand : Shape
 
     private Geometry CreateGeometry(List<char> label, double unit, int expectedWidth)
     {
-        var bitmap = BuildFullBitmap(label, expectedWidth);
-        var edges = ExtractDirectedEdges(bitmap);
-        var contours = TraceContours(edges);
-        return BuildStreamGeometry(contours, unit);
+        if (_cachedContours == null || _cachedExpectedWidth != expectedWidth)
+        {
+            var bitmap = BuildFullBitmap(label, expectedWidth);
+            var edges = ExtractDirectedEdges(bitmap);
+            _cachedContours = TraceContours(edges);
+            _cachedExpectedWidth = expectedWidth;
+        }
+
+        return BuildStreamGeometry(_cachedContours, unit);
     }
 
     /// <summary>

@@ -248,6 +248,33 @@ public partial class IrihiBand
         { 1, 1, 1, 1 }
     };
 
+    private static readonly byte[,] CharacterSpace = new byte[,]
+    {
+        { 0, 0, 0 },
+        { 0, 0, 0 },
+        { 0, 0, 0 },
+        { 0, 0, 0 },
+        { 0, 0, 0 },
+    };
+
+    private static readonly byte[,] CharacterApostrophe = new byte[,]
+    {
+        { 1 },
+        { 1 },
+        { 0 },
+        { 0 },
+        { 0 },
+    };
+
+    private static readonly byte[,] CharacterPeriod = new byte[,]
+    {
+        { 0 },
+        { 0 },
+        { 0 },
+        { 0 },
+        { 1 },
+    };
+
     private static readonly FrozenDictionary<char, byte[,]> GlyphMappings = new Dictionary<char, byte[,]>()
     {
         ['A'] = CharacterA,
@@ -276,6 +303,9 @@ public partial class IrihiBand
         ['X'] = CharacterX,
         ['Y'] = CharacterY,
         ['Z'] = CharacterZ,
+        [' '] = CharacterSpace,
+        ['\''] = CharacterApostrophe,
+        ['.'] = CharacterPeriod,
     }.ToFrozenDictionary();
 
     private static readonly FrozenDictionary<char, int> GlyphWidthMapping =
