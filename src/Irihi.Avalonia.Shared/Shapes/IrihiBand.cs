@@ -121,43 +121,52 @@ public partial class IrihiBand : Shape
     }
 
     // ------------------------------------------------------------------------
-    // Bitmap → rect decomposition → StreamGeometry
+    // Bitmap → directed-edge extraction → contour tracing → StreamGeometry
     // ------------------------------------------------------------------------
+
+    private const int BitmapMargin = 1;
 
     private Geometry CreateGeometry(List<char> label, double unit, int expectedWidth)
     {
         var bitmap = BuildFullBitmap(label, expectedWidth);
-        var rects = DecomposeToRectangles(bitmap);
-        return BuildStreamGeometry(rects, unit);
+        var edges = ExtractDirectedEdges(bitmap);
+        var contours = TraceContours(edges);
+        return BuildStreamGeometry(contours, unit);
     }
 
+    /// <summary>
+    /// Build a binary bitmap with a 1-pixel zero-margin on all sides,
+    /// so that every filled region is surrounded by zeros — no edge-case boundaries.
+    /// </summary>
     private byte[,] BuildFullBitmap(List<char> label, int expectedWidth)
     {
-        var bitmap = new byte[BandHeight, expectedWidth];
+        var h = BandHeight + BitmapMargin * 2;
+        var w = expectedWidth + BitmapMargin * 2;
+        var bitmap = new byte[h, w];
 
-        // 左边填充（阳）
-        for (var x = LeftFillX; x < LeftFillX + LeftFillWidth; x++)
-        for (var y = 0; y < BandHeight; y++)
+        // 左边填充（阳）— offset by Margin
+        for (var x = LeftFillX + BitmapMargin; x < LeftFillX + LeftFillWidth + BitmapMargin; x++)
+        for (var y = BitmapMargin; y < BandHeight + BitmapMargin; y++)
             bitmap[y, x] = 1;
 
         // Logo 镂空（阴）
         for (var r = 0; r < LogoHeight; r++)
         for (var c = 0; c < LogoWidth; c++)
             if (IrihiLogoBitmap[r, c] == 1)
-                bitmap[LogoY + r, LogoX + c] = 0;
+                bitmap[LogoY + r + BitmapMargin, LogoX + c + BitmapMargin] = 0;
 
         // 右边边框（阳）
-        for (var x = TextStartX; x < expectedWidth; x++)
-        for (var y = 0; y < BandHeight; y++)
+        for (var x = TextStartX + BitmapMargin; x < expectedWidth + BitmapMargin; x++)
+        for (var y = BitmapMargin; y < BandHeight + BitmapMargin; y++)
             bitmap[y, x] = 1;
 
         // 右边内部镂空（阴）
-        for (var x = InnerX; x < expectedWidth; x++)
-        for (var y = InnerY; y < InnerY + InnerHeight; y++)
+        for (var x = InnerX + BitmapMargin; x < expectedWidth + BitmapMargin; x++)
+        for (var y = InnerY + BitmapMargin; y < InnerY + InnerHeight + BitmapMargin; y++)
             bitmap[y, x] = 0;
 
         // 字母填充（阳）
-        var letterX = LetterX;
+        var letterX = LetterX + BitmapMargin;
         foreach (var c in label)
         {
             if (GlyphMappings.TryGetValue(c, out var letterBitmap))
@@ -167,7 +176,7 @@ public partial class IrihiBand : Shape
                 for (var r = 0; r < charH; r++)
                 for (var col = 0; col < charW; col++)
                     if (letterBitmap[r, col] == 1)
-                        bitmap[LetterY + r, letterX + col] = 1;
+                        bitmap[LetterY + r + BitmapMargin, letterX + col] = 1;
                 letterX += charW + LetterGap;
             }
         }
@@ -175,74 +184,141 @@ public partial class IrihiBand : Shape
         return bitmap;
     }
 
-    private static List<(int left, int top, int width, int height)> DecomposeToRectangles(byte[,] bitmap)
+    /// <summary>
+    /// Extract directed edges where pixel values differ.
+    /// 
+    /// Direction rules (clockwise around filled=1 regions):
+    ///   top=0,bot=1 → ←    top=1,bot=0 → →
+    ///   left=0,right=1 → ↓  left=1,right=0 → ↑
+    /// </summary>
+    private static List<(int fromR, int fromC, int toR, int toC)> ExtractDirectedEdges(byte[,] bitmap)
     {
-        var height = bitmap.GetLength(0);
-        var width = bitmap.GetLength(1);
-        var result = new List<(int, int, int, int)>();
-        var active = new List<(int left, int right, int top)>();
+        var h = bitmap.GetLength(0);
+        var w = bitmap.GetLength(1);
+        var edges = new List<(int, int, int, int)>();
 
-        for (var y = 0; y < height; y++)
+        for (var r = 1; r < h; r++)
+        for (var c = 0; c < w; c++)
         {
-            var runs = new List<(int left, int right)>();
-            for (var x = 0; x < width; x++)
-            {
-                if (bitmap[y, x] == 0) continue;
-                var runLeft = x;
-                while (x < width && bitmap[y, x] == 1) x++;
-                runs.Add((runLeft, x - 1));
-                x--;
-            }
+            var top = bitmap[r - 1, c];
+            var bot = bitmap[r, c];
+            if (top == 0 && bot == 1)      edges.Add((r, c + 1, r, c));     // ←
+            else if (top == 1 && bot == 0) edges.Add((r, c, r, c + 1));     // →
+        }
 
-            var stillActive = new List<(int left, int right, int top)>();
+        for (var c = 1; c < w; c++)
+        for (var r = 0; r < h; r++)
+        {
+            var left  = bitmap[r, c - 1];
+            var right = bitmap[r, c];
+            if (left == 0 && right == 1)      edges.Add((r, c, r + 1, c));   // ↓
+            else if (left == 1 && right == 0) edges.Add((r + 1, c, r, c));   // ↑
+        }
 
-            foreach (var (rLeft, rRight) in runs)
+        return edges;
+    }
+
+    /// <summary>
+    /// Trace directed edges into closed contours. At every junction,
+    /// prefer the left-most turn to stay tight against filled regions.
+    /// </summary>
+    private static List<List<(int r, int c)>> TraceContours(
+        List<(int fromR, int fromC, int toR, int toC)> edges)
+    {
+        // Build adjacency map: point → outgoing edges
+        var outgoing = new Dictionary<(int, int), List<(int toR, int toC)>>();
+        foreach (var (fr, fc, tr, tc) in edges)
+        {
+            var key = (fr, fc);
+            if (!outgoing.ContainsKey(key))
+                outgoing[key] = new List<(int, int)>();
+            outgoing[key].Add((tr, tc));
+        }
+
+        var visited = new HashSet<(int, int, int, int)>();
+        var contours = new List<List<(int r, int c)>>();
+
+        foreach (var (fr, fc, tr, tc) in edges)
+        {
+            var edgeKey = (fr, fc, tr, tc);
+            if (visited.Contains(edgeKey)) continue;
+
+            var contour = new List<(int, int)>();
+            var sr = fr; var sc = fc;
+            contour.Add((sr, sc));
+
+            var cr = tr; var cc = tc; // current point = first edge's destination
+            var pr = sr; var pc = sc; // previous point
+            visited.Add(edgeKey);
+
+            while ((cr, cc) != (sr, sc))
             {
-                var merged = false;
-                for (var i = 0; i < active.Count; i++)
+                contour.Add((cr, cc));
+                var key = (cr, cc);
+                if (!outgoing.TryGetValue(key, out var candidates) || candidates.Count == 0)
+                    break;
+
+                // Pick next edge: left-turn priority
+                var dir = (dr: cr - pr, dc: cc - pc); // incoming direction
+                var bestR = candidates[0].toR;
+                var bestC = candidates[0].toC;
+                var bestScore = int.MinValue;
+
+                foreach (var (nr, nc) in candidates)
                 {
-                    if (active[i].left == rLeft && active[i].right == rRight)
+                    var nd = (dr: nr - cr, dc: nc - cc);
+                    if ((nr, nc) == (pr, pc)) continue; // skip U-turn
+
+                    // Score: left=2, straight=1, right=0
+                    var score = nd == (-dir.dc, dir.dr) ? 2      // left
+                              : nd == dir ? 1                      // straight
+                              : 0;                                 // right
+
+                    var nextKey = (cr, cc, nr, nc);
+                    if (visited.Contains(nextKey)) continue;
+
+                    if (score > bestScore)
                     {
-                        stillActive.Add(active[i]);
-                        active.RemoveAt(i);
-                        merged = true;
-                        break;
+                        bestScore = score;
+                        bestR = nr;
+                        bestC = nc;
                     }
                 }
 
-                if (!merged)
-                    stillActive.Add((rLeft, rRight, y));
+                var chosenKey = (cr, cc, bestR, bestC);
+                if (visited.Contains(chosenKey)) break;
+                visited.Add(chosenKey);
+
+                pr = cr; pc = cc;
+                cr = bestR; cc = bestC;
             }
 
-            foreach (var (aLeft, aRight, aTop) in active)
-                result.Add((aLeft, aTop, aRight - aLeft + 1, y - aTop));
-
-            active = stillActive;
+            if (contour.Count >= 3)
+                contours.Add(contour);
         }
 
-        foreach (var (aLeft, aRight, aTop) in active)
-            result.Add((aLeft, aTop, aRight - aLeft + 1, height - aTop));
-
-        return result;
+        return contours;
     }
 
     private static StreamGeometry BuildStreamGeometry(
-        List<(int left, int top, int width, int height)> rects, double unit)
+        List<List<(int r, int c)>> contours, double unit)
     {
         var geometry = new StreamGeometry();
         using var ctx = geometry.Open();
 
-        foreach (var (left, top, w, h) in rects)
+        foreach (var contour in contours)
         {
-            var x = left * unit;
-            var y = top * unit;
-            var rw = w * unit;
-            var rh = h * unit;
+            if (contour.Count == 0) continue;
 
-            ctx.BeginFigure(new Point(x, y), isFilled: true);
-            ctx.LineTo(new Point(x + rw, y));
-            ctx.LineTo(new Point(x + rw, y + rh));
-            ctx.LineTo(new Point(x, y + rh));
+            var first = contour[0];
+            ctx.BeginFigure(
+                new Point((first.c - BitmapMargin) * unit, (first.r - BitmapMargin) * unit),
+                isFilled: true);
+
+            for (var i = 1; i < contour.Count; i++)
+                ctx.LineTo(
+                    new Point((contour[i].c - BitmapMargin) * unit, (contour[i].r - BitmapMargin) * unit));
+
             ctx.EndFigure(isClosed: true);
         }
 
