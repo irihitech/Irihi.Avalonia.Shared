@@ -27,6 +27,8 @@
             Width="{Binding #width.Value}"
             Corner="{Binding #corner.Value}"
             Fill="{DynamicResource SemiBlue5}" />
+        
+        <iri:IrihiBand Width="400" Height="200" Label="URSA" Fill="{DynamicResource SemiBlue5}" />
         <CheckBox Margin="0,0,-7,0" />
         <Panel Width="100" Height="100">
             <iri:PureRectangle Background="Yellow" />
@@ -36,7 +38,7 @@
             Height="40"
             HorizontalAlignment="Left"
             Background="Red" />
-        <iri:PureCircle Background="Blue" Diameter="50" />
+        <iri:PureCircle Background="Blue" Diameter="50" Margin="10" />
         <Panel>
             <Button>Hell World</Button>
             <iri:PureRing
