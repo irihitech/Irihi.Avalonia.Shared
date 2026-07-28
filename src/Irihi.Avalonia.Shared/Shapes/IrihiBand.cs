@@ -48,9 +48,18 @@ public partial class IrihiBand : Shape
         set => SetValue(LabelProperty, value);
     }
 
+    public static readonly StyledProperty<double> CornerRatioProperty = AvaloniaProperty.Register<IrihiBand, double>(
+        nameof(CornerRatio), 0.25);
+
+    public double CornerRatio
+    {
+        get => GetValue(CornerRatioProperty);
+        set => SetValue(CornerRatioProperty, value);
+    }
+
     static IrihiBand()
     {
-        AffectsGeometry<IrihiBand>(LabelProperty);
+        AffectsGeometry<IrihiBand>(LabelProperty, CornerRatioProperty);
         AffectsMeasure<IrihiBand>(LabelProperty);
     }
 
@@ -146,7 +155,7 @@ public partial class IrihiBand : Shape
             _cachedExpectedWidth = expectedWidth;
         }
 
-        return BuildStreamGeometry(_cachedContours, unit);
+        return BuildStreamGeometry(_cachedContours, unit, CornerRatio);
     }
 
     /// <summary>
@@ -312,9 +321,9 @@ public partial class IrihiBand : Shape
             if ((nr, nc) == (pr, pc)) continue; // skip U-turn
 
             var nd = (dr: nr - cr, dc: nc - cc);
-            var score = nd == (-dir.dc, dir.dr) ? 2      // left
+            var score = nd == (dir.dc, -dir.dr) ? 2      // right
                       : nd == dir ? 1                      // straight
-                      : 0;                                 // right
+                      : 0;                                 // left
 
             if (score > bestScore)
             {
@@ -329,27 +338,107 @@ public partial class IrihiBand : Shape
     }
 
     private static StreamGeometry BuildStreamGeometry(
-        List<List<(int r, int c)>> contours, double unit)
+        List<List<(int r, int c)>> contours, double unit, double cornerRatio)
     {
         var geometry = new StreamGeometry();
         using var ctx = geometry.Open();
+        var radius = unit * cornerRatio;
 
-        foreach (var contour in contours)
+        foreach (var raw in contours)
         {
-            if (contour.Count == 0) continue;
+            // Merge collinear segments so only actual corners get rounded
+            var contour = SimplifyContour(raw);
+            var n = contour.Count;
+            if (n < 3 || radius <= 0)
+            {
+                if (n == 0) continue;
+                var first = contour[0];
+                ctx.BeginFigure(ToPoint(first, unit), isFilled: true);
+                for (var i = 1; i < n; i++)
+                    ctx.LineTo(ToPoint(contour[i], unit));
+                ctx.EndFigure(isClosed: true);
+                continue;
+            }
 
-            var first = contour[0];
-            ctx.BeginFigure(
-                new Point((first.c - BitmapMargin) * unit, (first.r - BitmapMargin) * unit),
-                isFilled: true);
+            var pts = contour.Select(p => ToPoint(p, unit)).ToArray();
 
-            for (var i = 1; i < contour.Count; i++)
-                ctx.LineTo(
-                    new Point((contour[i].c - BitmapMargin) * unit, (contour[i].r - BitmapMargin) * unit));
+            var corners = new (Point cornerIn, Point cornerOut, SweepDirection sweep)[n];
+            for (var i = 0; i < n; i++)
+            {
+                var prev = pts[(i - 1 + n) % n];
+                var curr = pts[i];
+                var next = pts[(i + 1) % n];
 
+                var vIn  = Normalize(prev - curr);
+                var vOut = Normalize(next - curr);
+
+                var cross = vIn.X * vOut.Y - vIn.Y * vOut.X;
+                corners[i] = (
+                    curr + vIn * radius,
+                    curr + vOut * radius,
+                    cross > 0 ? SweepDirection.CounterClockwise : SweepDirection.Clockwise
+                );
+            }
+
+            var arcSize = new Size(radius, radius);
+
+            ctx.BeginFigure(corners[0].cornerOut, isFilled: true);
+            for (var i = 1; i < n; i++)
+            {
+                ctx.LineTo(corners[i].cornerIn);
+                ctx.ArcTo(corners[i].cornerOut, arcSize, 0, false, corners[i].sweep);
+            }
+            ctx.LineTo(corners[0].cornerIn);
+            ctx.ArcTo(corners[0].cornerOut, arcSize, 0, false, corners[0].sweep);
             ctx.EndFigure(isClosed: true);
         }
 
         return geometry;
+    }
+
+    /// <summary>Remove intermediate collinear points from a closed contour.</summary>
+    private static List<(int r, int c)> SimplifyContour(List<(int r, int c)> contour)
+    {
+        var n = contour.Count;
+        if (n < 3) return contour;
+
+        static bool Collinear((int r, int c) a, (int r, int c) b, (int r, int c) c) =>
+            (b.r - a.r) * (c.c - b.c) == (b.c - a.c) * (c.r - b.r);
+
+        var result = new List<(int, int)>(n) { contour[0] };
+        for (var i = 1; i < n; i++)
+        {
+            result.Add(contour[i]);
+            while (result.Count >= 3)
+            {
+                var m = result.Count;
+                if (Collinear(result[m - 3], result[m - 2], result[m - 1]))
+                    result.RemoveAt(m - 2);
+                else
+                    break;
+            }
+        }
+
+        while (result.Count >= 3)
+        {
+            var m = result.Count;
+            if (Collinear(result[m - 2], result[m - 1], result[0]))
+                result.RemoveAt(m - 1);
+            else if (Collinear(result[m - 1], result[0], result[1]))
+                result.RemoveAt(0);
+            else
+                break;
+        }
+
+        return result;
+    }
+
+    private static Point ToPoint((int r, int c) p, double unit) =>
+        new((p.c - BitmapMargin) * unit, (p.r - BitmapMargin) * unit);
+
+    private static Point Normalize(Point p)
+    {
+        var len = Math.Sqrt(p.X * p.X + p.Y * p.Y);
+        return len > 0 ? new Point(p.X / len, p.Y / len) : p;
     }
 }
