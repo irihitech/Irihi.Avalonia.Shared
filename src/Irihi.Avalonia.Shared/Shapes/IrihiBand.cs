@@ -161,7 +161,7 @@ public partial class IrihiBand : Shape
             bitmap[y, x] = 1;
 
         // 右边内部镂空（阴）
-        for (var x = InnerX + BitmapMargin; x < expectedWidth + BitmapMargin; x++)
+        for (var x = InnerX + BitmapMargin; x < expectedWidth - BorderThickness + BitmapMargin; x++)
         for (var y = InnerY + BitmapMargin; y < InnerY + InnerHeight + BitmapMargin; y++)
             bitmap[y, x] = 0;
 
@@ -219,13 +219,14 @@ public partial class IrihiBand : Shape
     }
 
     /// <summary>
-    /// Trace directed edges into closed contours. At every junction,
-    /// prefer the left-most turn to stay tight against filled regions.
+    /// Trace directed edges into closed contours. Edges are consumed (removed)
+    /// as they are traced — no separate visited set needed. At every junction,
+    /// prefer the left-most turn.
     /// </summary>
     private static List<List<(int r, int c)>> TraceContours(
         List<(int fromR, int fromC, int toR, int toC)> edges)
     {
-        // Build adjacency map: point → outgoing edges
+        // point → outgoing edges (destinations)
         var outgoing = new Dictionary<(int, int), List<(int toR, int toC)>>();
         foreach (var (fr, fc, tr, tc) in edges)
         {
@@ -235,21 +236,23 @@ public partial class IrihiBand : Shape
             outgoing[key].Add((tr, tc));
         }
 
-        var visited = new HashSet<(int, int, int, int)>();
         var contours = new List<List<(int r, int c)>>();
 
-        foreach (var (fr, fc, tr, tc) in edges)
+        while (outgoing.Count > 0)
         {
-            var edgeKey = (fr, fc, tr, tc);
-            if (visited.Contains(edgeKey)) continue;
+            // Pick any remaining start point + its first outgoing edge
+            var startKey = outgoing.Keys.First();
+            var startEdges = outgoing[startKey];
+            var (sr, sc) = startKey;
 
-            var contour = new List<(int, int)>();
-            var sr = fr; var sc = fc;
-            contour.Add((sr, sc));
+            var best = PickBest(startEdges, sr, sc, sr, sc);
+            if (!best.found) break;
+            startEdges.RemoveAt(best.idx);
+            if (startEdges.Count == 0) outgoing.Remove(startKey);
 
-            var cr = tr; var cc = tc; // current point = first edge's destination
-            var pr = sr; var pc = sc; // previous point
-            visited.Add(edgeKey);
+            var contour = new List<(int, int)> { (sr, sc) };
+            var cr = best.r; var cc = best.c;
+            var pr = sr; var pc = sc;
 
             while ((cr, cc) != (sr, sc))
             {
@@ -258,39 +261,13 @@ public partial class IrihiBand : Shape
                 if (!outgoing.TryGetValue(key, out var candidates) || candidates.Count == 0)
                     break;
 
-                // Pick next edge: left-turn priority
-                var dir = (dr: cr - pr, dc: cc - pc); // incoming direction
-                var bestR = candidates[0].toR;
-                var bestC = candidates[0].toC;
-                var bestScore = int.MinValue;
-
-                foreach (var (nr, nc) in candidates)
-                {
-                    var nd = (dr: nr - cr, dc: nc - cc);
-                    if ((nr, nc) == (pr, pc)) continue; // skip U-turn
-
-                    // Score: left=2, straight=1, right=0
-                    var score = nd == (-dir.dc, dir.dr) ? 2      // left
-                              : nd == dir ? 1                      // straight
-                              : 0;                                 // right
-
-                    var nextKey = (cr, cc, nr, nc);
-                    if (visited.Contains(nextKey)) continue;
-
-                    if (score > bestScore)
-                    {
-                        bestScore = score;
-                        bestR = nr;
-                        bestC = nc;
-                    }
-                }
-
-                var chosenKey = (cr, cc, bestR, bestC);
-                if (visited.Contains(chosenKey)) break;
-                visited.Add(chosenKey);
+                best = PickBest(candidates, cr, cc, pr, pc);
+                if (!best.found) break;
+                candidates.RemoveAt(best.idx);
+                if (candidates.Count == 0) outgoing.Remove(key);
 
                 pr = cr; pc = cc;
-                cr = bestR; cc = bestC;
+                cr = best.r; cc = best.c;
             }
 
             if (contour.Count >= 3)
@@ -298,6 +275,42 @@ public partial class IrihiBand : Shape
         }
 
         return contours;
+    }
+
+    /// <summary>
+    /// From a list of candidate destination points, pick the one that
+    /// turns left-most relative to the incoming direction (prev → cur).
+    /// Returns (found, idx, r, c). Skips U-turns.
+    /// </summary>
+    private static (bool found, int idx, int r, int c) PickBest(
+        List<(int toR, int toC)> candidates, int cr, int cc, int pr, int pc)
+    {
+        var dir = (dr: cr - pr, dc: cc - pc);
+        var bestIdx = -1;
+        var bestScore = int.MinValue;
+        var bestR = 0;
+        var bestC = 0;
+
+        for (var i = 0; i < candidates.Count; i++)
+        {
+            var (nr, nc) = candidates[i];
+            if ((nr, nc) == (pr, pc)) continue; // skip U-turn
+
+            var nd = (dr: nr - cr, dc: nc - cc);
+            var score = nd == (-dir.dc, dir.dr) ? 2      // left
+                      : nd == dir ? 1                      // straight
+                      : 0;                                 // right
+
+            if (score > bestScore)
+            {
+                bestScore = score;
+                bestIdx = i;
+                bestR = nr;
+                bestC = nc;
+            }
+        }
+
+        return bestIdx >= 0 ? (true, bestIdx, bestR, bestC) : (false, 0, 0, 0);
     }
 
     private static StreamGeometry BuildStreamGeometry(
