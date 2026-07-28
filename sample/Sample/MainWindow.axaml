@@ -31,23 +31,24 @@
         <iri:IrihiBand 
             Height="50" 
             Margin="20" 
+            Label="Huska" 
+            Fill="{DynamicResource SemiAIGeneral5}" />
+        <iri:IrihiBand 
+            Height="50" 
+            Margin="20" 
             Label="Ursa" 
-            Fill="{DynamicResource SemiBlue8}" />
+            Fill="{DynamicResource SemiBlue5}" />
         <iri:IrihiBand 
             Height="50" 
             Margin="20" 
             Label="Mantra" 
-            Fill="{DynamicResource SemiBlue8}" />
-        <iri:IrihiBand 
-            Height="50" 
-            Margin="20" 
-            Label="Semi" 
-            Fill="{DynamicResource SemiBlue8}" />
+            Fill="{DynamicResource SemiBlue6}" />
         <iri:IrihiBand 
             Height="50" 
             Margin="20" 
             Label="Lingua" 
             Fill="{DynamicResource SemiBlue9}" />
+        
         <CheckBox Margin="0,0,-7,0" />
         <Panel Width="100" Height="100">
             <iri:PureRectangle Background="Yellow" />
