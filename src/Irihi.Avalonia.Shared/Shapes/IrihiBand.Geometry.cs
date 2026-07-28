@@ -248,7 +248,7 @@ public partial class IrihiBand
         { 1, 1, 1, 1 }
     };
 
-    private static IReadOnlyDictionary<char, byte[,]> GlyphMappings = new Dictionary<char, byte[,]>()
+    private static readonly FrozenDictionary<char, byte[,]> GlyphMappings = new Dictionary<char, byte[,]>()
     {
         ['A'] = Character_A,
         ['B'] = Character_B,
@@ -276,35 +276,8 @@ public partial class IrihiBand
         ['X'] = Character_X,
         ['Y'] = Character_Y,
         ['Z'] = Character_Z,
-    };
+    }.ToFrozenDictionary();
 
-    private static IReadOnlyDictionary<char, int> GlyphWidthMapping = new Dictionary<char, int>()
-    {
-        ['A'] = 4,
-        ['B'] = 4,
-        ['C'] = 4,
-        ['D'] = 4,
-        ['E'] = 4,
-        ['F'] = 4,
-        ['G'] = 4,
-        ['H'] = 4,
-        ['I'] = 3,
-        ['J'] = 4,
-        ['K'] = 4,
-        ['L'] = 4,
-        ['M'] = 5,
-        ['N'] = 5,
-        ['O'] = 4,
-        ['P'] = 4,
-        ['Q'] = 5,
-        ['R'] = 4,
-        ['S'] = 4,
-        ['T'] = 5,
-        ['U'] = 4,
-        ['V'] = 5,
-        ['W'] = 5,
-        ['X'] = 5,
-        ['Y'] = 5,
-        ['Z'] = 4,
-    };
+    private static readonly FrozenDictionary<char, int> GlyphWidthMapping =
+        GlyphMappings.ToFrozenDictionary(kv => kv.Key, kv => kv.Value.GetLength(1));
 }

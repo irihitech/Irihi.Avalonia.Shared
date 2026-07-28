@@ -5,8 +5,40 @@ using Avalonia.Media;
 
 namespace Irihi.Avalonia.Shared.Shapes;
 
-public partial class IrihiBand: Shape
+public partial class IrihiBand : Shape
 {
+    // === Design-time layout constants (in logical units) ===
+
+    private const int BandHeight = 8;
+
+    // Logo
+    private const int LogoWidth = 8;
+    private const int LogoHeight = 6;
+    private const int LogoX = LeftMargin;
+    private const int LogoY = (BandHeight - LogoHeight) / 2; // = 1
+
+    // Letter
+    private const int LetterHeight = 5;
+
+    // Spacing
+    private const int LeftMargin = 1;
+    private const int RightMargin = 4;
+    private const int BorderThickness = 1;
+    private const int LetterGap = 1;
+    private const int LetterPadding = 1; // extra inset inside border before first letter
+
+    // Derived
+    private const int LeftFillX = 0;
+    private const int LeftFillWidth = LeftMargin + LogoWidth;            // = 9
+    private const int TextStartX = LeftFillX + LeftFillWidth;           // = 9
+    private const int InnerX = TextStartX + BorderThickness;            // = 10
+    private const int InnerY = BorderThickness;                         // = 1
+    private const int InnerHeight = BandHeight - BorderThickness;       // = 7 (bottom-open)
+    private const int LetterX = InnerX + LetterPadding;                 // = 11
+    private const int LetterY = InnerY + LetterPadding;                 // = 2
+
+    // ------------------------------------------------------------------------
+
     public static readonly StyledProperty<string?> LabelProperty = AvaloniaProperty.Register<IrihiBand, string?>(
         nameof(Label));
 
@@ -24,103 +56,100 @@ public partial class IrihiBand: Shape
 
     protected override Size MeasureOverride(Size availableSize)
     {
-        if (string.IsNullOrEmpty(Label))
-            return base.MeasureOverride(availableSize);
-
-        var label = Label
-            .Where(char.IsLetter)
-            .Select(char.ToUpper)
-            .ToList();
-
-        if (label.Count == 0)
+        var label = NormalizeLabel(Label);
+        if (label is null)
             return base.MeasureOverride(availableSize);
 
         var expectedWidth = GetExpectedWidth(label);
-        var aspectRatio = (double)expectedWidth / 8;
+        var aspectRatio = (double)expectedWidth / BandHeight;
 
         var width = Math.Min(availableSize.Width, availableSize.Height * aspectRatio);
         var height = width / aspectRatio;
 
         return new Size(width, height);
     }
-    
+
+    protected override Size ArrangeOverride(Size finalSize)
+    {
+        return DesiredSize;
+    }
+
     protected override Geometry? CreateDefiningGeometry()
     {
-        if (string.IsNullOrEmpty(Label))
+        var label = NormalizeLabel(Label);
+        if (label is null)
             return null;
 
-        var label = Label
+        var expectedWidth = GetExpectedWidth(label);
+
+        var unitW = double.IsNaN(Width) ? double.PositiveInfinity : Width / expectedWidth;
+        var unitH = double.IsNaN(Height) ? double.PositiveInfinity : Height / BandHeight;
+        var unit = Math.Min(unitW, unitH);
+        if (double.IsInfinity(unit) || unit is 0) return null;
+
+        return CreateGeometry(label, unit, expectedWidth);
+    }
+
+    // ------------------------------------------------------------------------
+
+    private static List<char>? NormalizeLabel(string? raw)
+    {
+        if (string.IsNullOrEmpty(raw))
+            return null;
+
+        var result = raw
             .Where(char.IsLetter)
             .Select(char.ToUpper)
             .ToList();
 
-        if (label.Count == 0)
-            return null;
-
-        var expectedWidth = GetExpectedWidth(label);
-        var expectedHeight = 8;
-        
-        var unitW = double.IsNaN(Width) ? double.PositiveInfinity : Width / expectedWidth;
-        var unitH = double.IsNaN(Height) ? double.PositiveInfinity : Height / expectedHeight;
-        var unit = Math.Min(unitW, unitH);
-        if (double.IsInfinity(unit) || unit is 0) return null;
-
-        return CreateGeometry(label, unit);
+        return result.Count == 0 ? null : result;
     }
 
-    private int GetExpectedWidth(List<char> label)
+    private static int GetExpectedWidth(List<char> label)
     {
-        int result = 0;
-        result += 8; //Logo width
-        result += 1; // left margin
+        var result = LeftFillWidth; // LogoWidth + LeftMargin
         foreach (var c in label)
         {
-            if(GlyphWidthMapping.TryGetValue(c, out var width))         
-            {
-                result += width; // width of glyph
-            }
+            if (GlyphWidthMapping.TryGetValue(c, out var width))
+                result += width;
         }
 
-        result += label.Count - 1; // Spaces between characters
-        result += 4; // right margin
+        result += (label.Count - 1) * LetterGap;
+        result += RightMargin;
 
         return result;
     }
 
-    private Geometry CreateGeometry(List<char> label, double unit)
+    private Geometry CreateGeometry(List<char> label, double unit, int expectedWidth)
     {
-        var expectedWidth = GetExpectedWidth(label);
-
         // === 左边：填充区域（阳）抠出 logo（阴）===
-        // Logo 区域实心矩形: (2, 0) → (10, 8)
-        var leftFill = new RectangleGeometry(new Rect(0, 0, 9 * unit, 8 * unit));
+        var leftFill = new RectangleGeometry(new Rect(
+            LeftFillX * unit, 0,
+            LeftFillWidth * unit, BandHeight * unit));
 
-        // Logo bitmap 6×8，在 8 高区域中垂直居中: offset = (8-6)/2 = 1
-        var logoGeo = CreateBitmapGeometry(Irihi_Logo_Bitmap, 1 * unit, 1 * unit, unit, unit);
+        var logoGeo = CreateBitmapGeometry(Irihi_Logo_Bitmap,
+            LogoX * unit, LogoY * unit, unit, unit);
 
-        // 左边 = 填充 - logo
         var leftPart = new CombinedGeometry(GeometryCombineMode.Exclude, leftFill, logoGeo);
 
         // === 右边：边框（阳）+ 字母（阳），内部空白（阴）===
-        const double textStartX = 9; // 2 (left margin) + 8 (logo)
-        var textWidth = expectedWidth - 9; // expectedWidth - textStartX - 2 (right margin)
+        var textWidth = expectedWidth - TextStartX;
 
-        // 外边框矩形
-        var rightOuter = new RectangleGeometry(new Rect(textStartX * unit, 0, textWidth * unit, 8 * unit));
+        var rightOuter = new RectangleGeometry(new Rect(
+            TextStartX * unit, 0,
+            textWidth * unit, BandHeight * unit));
 
-        // 内部空白矩形（缩进 1 unit）
-        var rightInner = new RectangleGeometry(new Rect((textStartX + 1) * unit, 1 * unit, (textWidth - 2) * unit, 7 * unit));
+        var rightInner = new RectangleGeometry(new Rect(
+            InnerX * unit, InnerY * unit,
+            (textWidth - BorderThickness * 2) * unit, InnerHeight * unit));
 
-        // 边框 = 外框 - 内框
         var rightBorder = new CombinedGeometry(GeometryCombineMode.Exclude, rightOuter, rightInner);
 
-        // 字母填充（在内部区域中，垂直居中: (6-5)/2 = 0.5）
-        var lettersGeo = CreateLettersGeometry(label, (textStartX + 2) * unit, 2 * unit, unit);
+        var lettersGeo = CreateLettersGeometry(label,
+            LetterX * unit, LetterY * unit, unit);
 
-        // 右边 = 边框 + 字母
         var rightPart = new CombinedGeometry(GeometryCombineMode.Union, rightBorder, lettersGeo);
 
-        // 整体 = 左边 + 右边
         return new CombinedGeometry(GeometryCombineMode.Union, leftPart, rightPart);
     }
 
@@ -153,7 +182,7 @@ public partial class IrihiBand: Shape
             {
                 var charWidth = bitmap.GetLength(1);
                 group.Children.Add(CreateBitmapGeometry(bitmap, x, startY, unit, unit));
-                x += (charWidth + 1) * unit; // 字母宽度 + 1 unit 间隔
+                x += (charWidth + LetterGap) * unit;
             }
         }
         return group;
