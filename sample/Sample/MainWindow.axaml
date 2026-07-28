@@ -22,6 +22,7 @@
         <Slider
             Name="corner"
             Width="300"
+            Maximum="10"
             Value="0" />
         <iri:IrihiLogo
             Width="{Binding #width.Value}"

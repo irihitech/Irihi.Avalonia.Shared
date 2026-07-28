@@ -4,7 +4,7 @@ namespace Irihi.Avalonia.Shared.Shapes;
 
 public partial class IrihiBand
 {
-    private static readonly byte[,] IrihiLogoBitmap = new byte[,]
+    internal static readonly byte[,] IrihiLogoBitmap = new byte[,]
     {
         { 1, 0, 1, 1, 1, 1, 0, 1 },
         { 0, 0, 0, 0, 0, 0, 0, 0 },
