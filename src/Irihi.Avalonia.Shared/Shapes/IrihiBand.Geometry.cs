@@ -34,11 +34,11 @@ public partial class IrihiBand
 
     private static readonly byte[,] Character_C = new byte[,]
     {
-        { 1, 1, 1 },
-        { 1, 0, 0 },
-        { 1, 0, 0 },
-        { 1, 0, 0 },
-        { 1, 1, 1 }
+        { 1, 1, 1, 1 },
+        { 1, 0, 0, 0 },
+        { 1, 0, 0, 0 },
+        { 1, 0, 0, 0 },
+        { 1, 1, 1, 1 }
     };
 
     private static readonly byte[,] Character_D = new byte[,]
@@ -52,20 +52,20 @@ public partial class IrihiBand
 
     private static readonly byte[,] Character_E = new byte[,]
     {
-        { 1, 1, 1 },
-        { 1, 0, 0 },
-        { 1, 1, 1 },
-        { 1, 0, 0 },
-        { 1, 1, 1 }
+        { 1, 1, 1, 1 },
+        { 1, 0, 0, 0 },
+        { 1, 1, 1, 1 },
+        { 1, 0, 0, 0 },
+        { 1, 1, 1, 1 }
     };
 
     private static readonly byte[,] Character_F = new byte[,]
     {
-        { 1, 1, 1 },
-        { 1, 0, 0 },
-        { 1, 1, 1 },
-        { 1, 0, 0 },
-        { 1, 0, 0 }
+        { 1, 1, 1, 1 },
+        { 1, 0, 0, 0 },
+        { 1, 1, 1, 1 },
+        { 1, 0, 0, 0 },
+        { 1, 0, 0, 0 }
     };
 
     private static readonly byte[,] Character_G = new byte[,]
@@ -115,11 +115,11 @@ public partial class IrihiBand
 
     private static readonly byte[,] Character_L = new byte[,]
     {
-        { 1, 0, 0 },
-        { 1, 0, 0 },
-        { 1, 0, 0 },
-        { 1, 0, 0 },
-        { 1, 1, 1 },
+        { 1, 0, 0, 0 },
+        { 1, 0, 0, 0 },
+        { 1, 0, 0, 0 },
+        { 1, 0, 0, 0 },
+        { 1, 1, 1, 1 },
     };
 
     private static readonly byte[,] Character_M = new byte[,]
@@ -169,11 +169,11 @@ public partial class IrihiBand
 
     private static readonly byte[,] Character_R = new byte[,]
     {
-        { 1, 1, 1, 1, 1 },
-        { 0, 1, 0, 0, 1 },
-        { 0, 1, 1, 1, 1 },
-        { 0, 1, 0, 1, 0 },
-        { 0, 1, 0, 0, 1 },
+        { 1, 1, 1, 1 },
+        { 1, 0, 0, 1 },
+        { 1, 1, 1, 1 },
+        { 1, 0, 1, 0 },
+        { 1, 0, 0, 1 },
     };
 
     private static readonly byte[,] Character_S = new byte[,]
@@ -282,22 +282,22 @@ public partial class IrihiBand
     {
         ['A'] = 4,
         ['B'] = 4,
-        ['C'] = 3,
+        ['C'] = 4,
         ['D'] = 4,
-        ['E'] = 3,
-        ['F'] = 3,
+        ['E'] = 4,
+        ['F'] = 4,
         ['G'] = 4,
         ['H'] = 4,
         ['I'] = 3,
         ['J'] = 4,
         ['K'] = 4,
-        ['L'] = 3,
+        ['L'] = 4,
         ['M'] = 5,
         ['N'] = 5,
         ['O'] = 4,
         ['P'] = 4,
         ['Q'] = 5,
-        ['R'] = 5,
+        ['R'] = 4,
         ['S'] = 4,
         ['T'] = 5,
         ['U'] = 4,

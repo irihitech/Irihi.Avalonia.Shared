@@ -19,6 +19,29 @@ public partial class IrihiBand: Shape
     static IrihiBand()
     {
         AffectsGeometry<IrihiBand>(LabelProperty);
+        AffectsMeasure<IrihiBand>(LabelProperty);
+    }
+
+    protected override Size MeasureOverride(Size availableSize)
+    {
+        if (string.IsNullOrEmpty(Label))
+            return base.MeasureOverride(availableSize);
+
+        var label = Label
+            .Where(char.IsLetter)
+            .Select(char.ToUpper)
+            .ToList();
+
+        if (label.Count == 0)
+            return base.MeasureOverride(availableSize);
+
+        var expectedWidth = GetExpectedWidth(label);
+        var aspectRatio = (double)expectedWidth / 8;
+
+        var width = Math.Min(availableSize.Width, availableSize.Height * aspectRatio);
+        var height = width / aspectRatio;
+
+        return new Size(width, height);
     }
     
     protected override Geometry? CreateDefiningGeometry()
@@ -37,8 +60,10 @@ public partial class IrihiBand: Shape
         var expectedWidth = GetExpectedWidth(label);
         var expectedHeight = 8;
         
-        var unit = Math.Min(Width / expectedWidth, Height / expectedHeight);
-        if (unit is 0) return null;
+        var unitW = double.IsNaN(Width) ? double.PositiveInfinity : Width / expectedWidth;
+        var unitH = double.IsNaN(Height) ? double.PositiveInfinity : Height / expectedHeight;
+        var unit = Math.Min(unitW, unitH);
+        if (double.IsInfinity(unit) || unit is 0) return null;
 
         return CreateGeometry(label, unit);
     }
@@ -47,7 +72,7 @@ public partial class IrihiBand: Shape
     {
         int result = 0;
         result += 8; //Logo width
-        result += 2; // left margin
+        result += 1; // left margin
         foreach (var c in label)
         {
             if(GlyphWidthMapping.TryGetValue(c, out var width))         
@@ -68,20 +93,20 @@ public partial class IrihiBand: Shape
 
         // === 左边：填充区域（阳）抠出 logo（阴）===
         // Logo 区域实心矩形: (2, 0) → (10, 8)
-        var leftFill = new RectangleGeometry(new Rect(0, 0, 10 * unit, 9 * unit));
+        var leftFill = new RectangleGeometry(new Rect(0, 0, 9 * unit, 8 * unit));
 
         // Logo bitmap 6×8，在 8 高区域中垂直居中: offset = (8-6)/2 = 1
-        var logoGeo = CreateBitmapGeometry(Irihi_Logo_Bitmap, 1 * unit, 1.5 * unit, unit, unit);
+        var logoGeo = CreateBitmapGeometry(Irihi_Logo_Bitmap, 1 * unit, 1 * unit, unit, unit);
 
         // 左边 = 填充 - logo
         var leftPart = new CombinedGeometry(GeometryCombineMode.Exclude, leftFill, logoGeo);
 
         // === 右边：边框（阳）+ 字母（阳），内部空白（阴）===
-        const double textStartX = 10; // 2 (left margin) + 8 (logo)
-        var textWidth = expectedWidth - 10; // expectedWidth - textStartX - 2 (right margin)
+        const double textStartX = 9; // 2 (left margin) + 8 (logo)
+        var textWidth = expectedWidth - 9; // expectedWidth - textStartX - 2 (right margin)
 
         // 外边框矩形
-        var rightOuter = new RectangleGeometry(new Rect(textStartX * unit, 0, textWidth * unit, 9 * unit));
+        var rightOuter = new RectangleGeometry(new Rect(textStartX * unit, 0, textWidth * unit, 8 * unit));
 
         // 内部空白矩形（缩进 1 unit）
         var rightInner = new RectangleGeometry(new Rect((textStartX + 1) * unit, 1 * unit, (textWidth - 2) * unit, 7 * unit));
