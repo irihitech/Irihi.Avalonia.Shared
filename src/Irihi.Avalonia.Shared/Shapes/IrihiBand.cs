@@ -127,7 +127,7 @@ public partial class IrihiBand : Shape
             LeftFillX * unit, 0,
             LeftFillWidth * unit, BandHeight * unit));
 
-        var logoGeo = CreateBitmapGeometry(Irihi_Logo_Bitmap,
+        var logoGeo = CreateBitmapGeometry(IrihiLogoBitmap,
             LogoX * unit, LogoY * unit, unit, unit);
 
         var leftPart = new CombinedGeometry(GeometryCombineMode.Exclude, leftFill, logoGeo);
