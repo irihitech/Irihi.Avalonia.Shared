@@ -2,15 +2,25 @@ name: Pack to NuGet
 
 on:
   workflow_dispatch:
-
+    inputs:
+      Upload_to_NuGet:
+        description: 'Upload to NuGet'
+        default: true
+        type: boolean
+  workflow_call:
+    inputs:
+      Upload_to_NuGet:
+        type: boolean
+        default: false
+    secrets: {}
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    permissions:
+      id-token: write
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
@@ -19,11 +29,19 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Pack
       run: | 
-          dotnet pack ./src/Irihi.Avalonia.Shared -o ./nugets
-          dotnet pack ./src/Irihi.Avalonia.Shared.Contracts -o ./nugets
-    - name: Publish NuGet package
+          dotnet pack src/Irihi.Avalonia.Shared -o nugets
+          dotnet pack src/Irihi.Avalonia.Shared.Contracts -o nugets
+
+    - name: NuGet login (OIDC → temp API key)
+      uses: NuGet/login@v1
+      id: login
       if: ${{ inputs.Upload_to_NuGet }}
-      run: dotnet nuget push "./nugets/*.nupkg" --api-key ${{ secrets.NUGET_ORG_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+      with:
+        user: ${{ secrets.NUGET_USER }}
+
+    - name: NuGet push
+      if: ${{ inputs.Upload_to_NuGet }}
+      run: dotnet nuget push nugets/*.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json --skip-duplicate
 
     - name: Upload a Build Artifact 
       uses: actions/upload-artifact@v7
