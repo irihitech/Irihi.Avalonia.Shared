@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:iri="https://irihi.tech/shared"
+             x:Class="Irihi.Avalonia.Shared.HeadlessTest.DataTemplateCollectionView">
+    <UserControl.Resources>
+        <iri:DataTemplateCollection x:Key="StringAndIntTemplates">
+            <DataTemplate DataType="x:String">
+                <TextBlock Text="{Binding}" />
+            </DataTemplate>
+            <DataTemplate DataType="x:Int32">
+                <Button Content="{Binding}" />
+            </DataTemplate>
+        </iri:DataTemplateCollection>
+    </UserControl.Resources>
+    <StackPanel>
+        <ContentControl
+            Name="StringContent"
+            Content="Hello from XAML"
+            ContentTemplate="{StaticResource StringAndIntTemplates}" />
+        <ContentControl
+            Name="IntContent"
+            Content="42"
+            ContentTemplate="{StaticResource StringAndIntTemplates}" />
+        <ContentControl
+            Name="NoMatchContent"
+            ContentTemplate="{StaticResource StringAndIntTemplates}" />
+        <ItemsControl
+            Name="MixedItems"
+            ItemTemplate="{StaticResource StringAndIntTemplates}" />
+        <ContentControl
+            Name="InlineContent">
+            <ContentControl.ContentTemplate>
+                <iri:DataTemplateCollection>
+                    <DataTemplate DataType="x:String">
+                        <Border>
+                            <TextBlock Text="{Binding}" />
+                        </Border>
+                    </DataTemplate>
+                </iri:DataTemplateCollection>
+            </ContentControl.ContentTemplate>
+        </ContentControl>
+    </StackPanel>
+</UserControl>
