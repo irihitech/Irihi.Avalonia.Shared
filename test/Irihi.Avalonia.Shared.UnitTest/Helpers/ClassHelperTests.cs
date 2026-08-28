@@ -92,4 +92,47 @@ public class ClassHelperTests
         ClassHelper.SetClasses(control, null!);
         Assert.Null(ClassHelper.GetClasses(control));
     }
+
+    [Fact]
+    public void OnSourceClassesChanged_Should_Update_Target_Classes_After_GC()
+    {
+        var sourceControl = new Button();
+        var targetControl = new Button();
+        ClassHelper.SetClassSource(targetControl, sourceControl);
+
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
+
+        sourceControl.Classes.Add("after-gc-class");
+        Assert.Contains("after-gc-class", targetControl.Classes);
+    }
+
+    [Fact]
+    public void OnSourceClassesChanged_Should_Update_Target_When_Source_Removes_Class()
+    {
+        var sourceControl = new Button();
+        sourceControl.Classes.Add("class-a");
+        var targetControl = new Button();
+        ClassHelper.SetClassSource(targetControl, sourceControl);
+
+        sourceControl.Classes.Remove("class-a");
+        Assert.DoesNotContain("class-a", targetControl.Classes);
+    }
+
+    [Fact]
+    public void ClassSource_Change_Should_Unsubscribe_Old_Source()
+    {
+        var sourceControl1 = new Button();
+        var sourceControl2 = new Button();
+        var targetControl = new Button();
+        ClassHelper.SetClassSource(targetControl, sourceControl1);
+        ClassHelper.SetClassSource(targetControl, sourceControl2);
+
+        sourceControl1.Classes.Add("old-source-class");
+        Assert.DoesNotContain("old-source-class", targetControl.Classes);
+
+        sourceControl2.Classes.Add("new-source-class");
+        Assert.Contains("new-source-class", targetControl.Classes);
+    }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Specialized;
+using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Collections;
 
@@ -12,6 +13,8 @@ public class ClassHelper
     public static readonly AttachedProperty<StyledElement> ClassSourceProperty =
         AvaloniaProperty.RegisterAttached<ClassHelper, StyledElement, StyledElement>("ClassSource");
 
+    private static readonly ConditionalWeakTable<StyledElement, SourceSubscription> _subscriptions = new();
+
     static ClassHelper()
     {
         ClassesProperty.Changed.AddClassHandler<StyledElement>(OnClassesChanged);
@@ -20,11 +23,59 @@ public class ClassHelper
 
     private static void OnClassSourceChanged(StyledElement arg1, AvaloniaPropertyChangedEventArgs arg2)
     {
+        // Unsubscribe from old source
+        if (_subscriptions.TryGetValue(arg1, out var old))
+        {
+            old.Dispose();
+            _subscriptions.Remove(arg1);
+        }
+
         if (arg2.NewValue is not StyledElement styledElement) return;
         arg1.Classes.Clear();
         var nonPseudoClasses = styledElement.Classes.Where(c => !c.StartsWith(':'));
         arg1.Classes.AddRange(nonPseudoClasses);
-        styledElement.Classes.WeakSubscribe((o, e) => OnSourceClassesChanged(o, e, arg1));
+
+        var subscription = new SourceSubscription(styledElement, arg1);
+        _subscriptions.Add(arg1, subscription);
+    }
+
+    /// <summary>
+    /// Holds the event subscription between a source and a target.
+    /// The target is held weakly so that it can be GC'd independently of the source.
+    /// When the target is GC'd, the subscription unregisters itself on the next source
+    /// class-change event via its finalizer cleanup path.
+    /// </summary>
+    private sealed class SourceSubscription : IDisposable
+    {
+        private readonly WeakReference<StyledElement> _weakTarget;
+        private readonly NotifyCollectionChangedEventHandler _handler;
+        public INotifyCollectionChanged Source { get; }
+
+        public SourceSubscription(StyledElement source, StyledElement target)
+        {
+            Source = source.Classes;
+            _weakTarget = new WeakReference<StyledElement>(target);
+            _handler = OnSourceClassesChanged;
+            source.Classes.CollectionChanged += _handler;
+        }
+
+        private void OnSourceClassesChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (_weakTarget.TryGetTarget(out var target))
+            {
+                ClassHelper.OnSourceClassesChanged(sender, e, target);
+            }
+            else
+            {
+                // Target has been GC'd; clean up this dangling subscription
+                Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            Source.CollectionChanged -= _handler;
+        }
     }
 
     private static void OnSourceClassesChanged(object? sender, NotifyCollectionChangedEventArgs e, StyledElement target)
