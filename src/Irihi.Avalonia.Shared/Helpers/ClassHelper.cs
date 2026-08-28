@@ -26,7 +26,7 @@ public class ClassHelper
         // Unsubscribe from old source
         if (_subscriptions.TryGetValue(arg1, out var old))
         {
-            old.Source.Classes.CollectionChanged -= old.Handler;
+            old.Dispose();
             _subscriptions.Remove(arg1);
         }
 
@@ -35,29 +35,47 @@ public class ClassHelper
         var nonPseudoClasses = styledElement.Classes.Where(c => !c.StartsWith(':'));
         arg1.Classes.AddRange(nonPseudoClasses);
 
-        var weakTarget = new WeakReference<StyledElement>(arg1);
-        NotifyCollectionChangedEventHandler handler = null!;
-        handler = (o, e) =>
+        var subscription = new SourceSubscription(styledElement, arg1);
+        _subscriptions.Add(arg1, subscription);
+    }
+
+    /// <summary>
+    /// Holds the event subscription between a source and a target.
+    /// The target is held weakly so that it can be GC'd independently of the source.
+    /// When the target is GC'd, the subscription unregisters itself on the next source
+    /// class-change event via its finalizer cleanup path.
+    /// </summary>
+    private sealed class SourceSubscription : IDisposable
+    {
+        private readonly WeakReference<StyledElement> _weakTarget;
+        private readonly NotifyCollectionChangedEventHandler _handler;
+        public INotifyCollectionChanged Source { get; }
+
+        public SourceSubscription(StyledElement source, StyledElement target)
         {
-            if (weakTarget.TryGetTarget(out var target))
+            Source = source.Classes;
+            _weakTarget = new WeakReference<StyledElement>(target);
+            _handler = OnSourceClassesChanged;
+            source.Classes.CollectionChanged += _handler;
+        }
+
+        private void OnSourceClassesChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (_weakTarget.TryGetTarget(out var target))
             {
-                OnSourceClassesChanged(o, e, target);
+                ClassHelper.OnSourceClassesChanged(sender, e, target);
             }
             else
             {
-                // Target has been GC'd; unsubscribe to prevent further callbacks
-                if (o is INotifyCollectionChanged collection)
-                    collection.CollectionChanged -= handler;
+                // Target has been GC'd; clean up this dangling subscription
+                Dispose();
             }
-        };
-        styledElement.Classes.CollectionChanged += handler;
-        _subscriptions.Add(arg1, new SourceSubscription(styledElement, handler));
-    }
+        }
 
-    private sealed class SourceSubscription(StyledElement source, NotifyCollectionChangedEventHandler handler)
-    {
-        public StyledElement Source { get; } = source;
-        public NotifyCollectionChangedEventHandler Handler { get; } = handler;
+        public void Dispose()
+        {
+            Source.CollectionChanged -= _handler;
+        }
     }
 
     private static void OnSourceClassesChanged(object? sender, NotifyCollectionChangedEventArgs e, StyledElement target)
