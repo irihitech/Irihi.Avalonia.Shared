@@ -1,4 +1,5 @@
 using System.Collections.Specialized;
+using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Collections;
 
@@ -12,6 +13,8 @@ public class ClassHelper
     public static readonly AttachedProperty<StyledElement> ClassSourceProperty =
         AvaloniaProperty.RegisterAttached<ClassHelper, StyledElement, StyledElement>("ClassSource");
 
+    private static readonly ConditionalWeakTable<StyledElement, SourceSubscription> _subscriptions = new();
+
     static ClassHelper()
     {
         ClassesProperty.Changed.AddClassHandler<StyledElement>(OnClassesChanged);
@@ -20,11 +23,41 @@ public class ClassHelper
 
     private static void OnClassSourceChanged(StyledElement arg1, AvaloniaPropertyChangedEventArgs arg2)
     {
+        // Unsubscribe from old source
+        if (_subscriptions.TryGetValue(arg1, out var old))
+        {
+            old.Source.Classes.CollectionChanged -= old.Handler;
+            _subscriptions.Remove(arg1);
+        }
+
         if (arg2.NewValue is not StyledElement styledElement) return;
         arg1.Classes.Clear();
         var nonPseudoClasses = styledElement.Classes.Where(c => !c.StartsWith(':'));
         arg1.Classes.AddRange(nonPseudoClasses);
-        styledElement.Classes.WeakSubscribe((o, e) => OnSourceClassesChanged(o, e, arg1));
+
+        var weakTarget = new WeakReference<StyledElement>(arg1);
+        NotifyCollectionChangedEventHandler handler = null!;
+        handler = (o, e) =>
+        {
+            if (weakTarget.TryGetTarget(out var target))
+            {
+                OnSourceClassesChanged(o, e, target);
+            }
+            else
+            {
+                // Target has been GC'd; unsubscribe to prevent further callbacks
+                if (o is INotifyCollectionChanged collection)
+                    collection.CollectionChanged -= handler;
+            }
+        };
+        styledElement.Classes.CollectionChanged += handler;
+        _subscriptions.Add(arg1, new SourceSubscription(styledElement, handler));
+    }
+
+    private sealed class SourceSubscription(StyledElement source, NotifyCollectionChangedEventHandler handler)
+    {
+        public StyledElement Source { get; } = source;
+        public NotifyCollectionChangedEventHandler Handler { get; } = handler;
     }
 
     private static void OnSourceClassesChanged(object? sender, NotifyCollectionChangedEventArgs e, StyledElement target)
