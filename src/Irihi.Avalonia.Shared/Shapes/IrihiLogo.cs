@@ -32,13 +32,21 @@ public class IrihiLogo : Shape
         set => SetValue(CornerRatioProperty, value);
     }
 
-    // ---- cached contours ----
+    private static readonly byte[,] LogoBitmap =
+    {
+        { 1, 0, 1, 1, 1, 1, 0, 1 },
+        { 0, 0, 0, 0, 0, 0, 0, 0 },
+        { 1, 0, 1, 1, 1, 1, 0, 1 },
+        { 1, 0, 1, 1, 0, 0, 0, 1 },
+        { 1, 0, 1, 0, 1, 0, 0, 1 },
+        { 1, 0, 1, 0, 0, 1, 0, 1 },
+    };
 
     private static readonly List<List<(int r, int c)>> CachedContours = BuildLogoContours();
 
     private static List<List<(int r, int c)>> BuildLogoContours()
     {
-        var src = IrihiBand.IrihiLogoBitmap;
+        var src = LogoBitmap;
         var rows = src.GetLength(0);
         var cols = src.GetLength(1);
 
